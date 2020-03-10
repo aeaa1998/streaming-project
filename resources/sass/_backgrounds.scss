@@ -1,0 +1,22 @@
+.chill-video{
+	position: absolute;
+  object-fit: cover;
+    right: 0;
+    top: 0%;
+    min-width: 100%;
+    max-height: 100%;
+    z-index: -1;
+       -webkit-filter: drop-shadow(8px 8px 10px black);
+   -moz-filter: drop-shadow(8px 8px 10px black);
+   -ms-filter: drop-shadow(8px 8px 10px black);
+   -o-filter: drop-shadow(8px 8px 10px black);
+   filter: drop-shadow(8px 8px 10px black);
+}
+
+.main-bg-t {
+  background: $mainColorTransparent;
+}
+
+.transparent-bg{
+  background: $transparent;
+}

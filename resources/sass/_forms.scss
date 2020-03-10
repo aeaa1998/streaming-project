@@ -1,0 +1,10 @@
+.form-input{
+    padding: 1rem;
+    height: 34px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+.form-input:focus{
+    border-color: $mainDarkColor;
+}
