@@ -9,11 +9,11 @@ class AuthUtils
     public static function getPermissions()
     {
         $permissions = collect(DB::select('
-        select Permission.id as id from users
-        inner join role on role.id = users.roleId 
-        inner join RolePermission on RolePermission.roleId = role.id
-        inner join Permission on Permission.id = RolePermission.permissionId
-        where users.id = 1
+        select Permission.permissionId as id from users
+        inner join role on role.roleId = users.roleId 
+        inner join RolePermission on RolePermission.roleId = role.roleId
+        inner join Permission on Permission.permissionId = RolePermission.permissionId
+        where users.userid = 1
         '));
         return $permissions->map(function ($permission) {
             return $permission->id;

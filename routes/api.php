@@ -17,6 +17,9 @@ use Illuminate\Http\Request;
 Route::put('update/by/id', 'DatabaseController@updateById');
 Route::put('delete/id', 'DatabaseController@deleteById');
 Route::post('create', 'DatabaseController@store');
+Route::post('admin/create', 'DatabaseController@store');
+Route::put('admin/update/by/id', 'DatabaseController@updateById');
+Route::put('admin/delete/id', 'DatabaseController@deleteById');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
 	return $request->user();
 });

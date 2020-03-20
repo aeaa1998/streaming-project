@@ -21,6 +21,7 @@ class ViewsController extends Controller
             )->with('createForm', Constants::CREATE_ARTIST);
     }
 
+
     public function genres()
     {
         return view('genres')->with('rows', json_encode(DB::select(Constants::GENRES_URL)))
