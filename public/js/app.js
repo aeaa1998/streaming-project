@@ -113005,14 +113005,14 @@ var TableView = function TableView(props) {
       onClick: function onClick() {
         fetchById(model.id, handleOpenEditing);
       }
-    });else return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_icons_DeleteForeverSharp__WEBPACK_IMPORTED_MODULE_13___default.a, {
+    });else if (permissionId == 3) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_icons_DeleteForeverSharp__WEBPACK_IMPORTED_MODULE_13___default.a, {
       key: permissionId,
       color: "error",
       className: "ml-2 pointer",
       onClick: function onClick() {
         deleteById(model.id);
       }
-    });
+    });else return "";
   };
 
   var handleClose = function handleClose() {
@@ -113021,22 +113021,7 @@ var TableView = function TableView(props) {
 
   var handleCloseEditing = function handleCloseEditing() {
     return setEditing(false);
-  }; // useEffect(() => {
-  //     const fetchRows = () => {
-  //         setIsFetching(true)
-  //         fetch(props.url)
-  //             .then(result => result.json())
-  //             .then(data => {
-  //                 setRows(_.sortBy(data, ['id']))
-  //             }).catch(error => (console.log(error)))
-  //             .finally(() => {
-  //                 setMounted(true)
-  //                 setIsFetching(false)
-  //             })
-  //     }
-  //     fetchRows()
-  // }, [])
-
+  };
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row"

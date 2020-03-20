@@ -180,30 +180,17 @@ const TableView = (props) => {
         else if (permissionId == 2) return <Edit key={permissionId} color="action" className="ml-2 pointer" onClick={() => {
             fetchById(model.id, handleOpenEditing)
         }} />
-        else return <DeleteForeverSharp key={permissionId} color="error" className="ml-2 pointer" onClick={
+        else if (permissionId == 3) return <DeleteForeverSharp key={permissionId} color="error" className="ml-2 pointer" onClick={
             () => {
                 deleteById(model.id)
             }
         } />
+        else return ""
 
     }
     const handleClose = () => (setOpen(false))
     const handleCloseEditing = () => (setEditing(false))
-    // useEffect(() => {
-    //     const fetchRows = () => {
-    //         setIsFetching(true)
-    //         fetch(props.url)
-    //             .then(result => result.json())
-    //             .then(data => {
-    //                 setRows(_.sortBy(data, ['id']))
-    //             }).catch(error => (console.log(error)))
-    //             .finally(() => {
-    //                 setMounted(true)
-    //                 setIsFetching(false)
-    //             })
-    //     }
-    //     fetchRows()
-    // }, [])
+
     return (
         <div className="row">
             {

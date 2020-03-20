@@ -20,6 +20,7 @@ Route::get('/artists', 'ViewsController@artists');
 Route::get('/genres', 'ViewsController@genres');
 Route::get('/albums', 'ViewsController@albums');
 Route::get('/songs', 'ViewsController@songs');
+Route::get('/admin/users', 'ViewsController@adminUsers');
 $router->get('fetch/{query}', 'DatabaseController@index');
 $router->get('fetch/{query}/{column}/{value}', 'DatabaseController@byId');
 $router->get('filtered/fetch/{query}/{column}/{value}/{operator}', 'DatabaseController@filtered');
