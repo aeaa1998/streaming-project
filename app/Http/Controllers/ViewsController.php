@@ -9,6 +9,12 @@ use  App\Http\Utils\Constants;
 
 class ViewsController extends Controller
 {
+
+    public function reports()
+    {
+        return view('reports')->with('permissions', json_encode([1, 2, 3]) );
+    }
+
     public function artists()
     {
         return view('artists')->with('rows', json_encode(DB::select(Constants::ARTIST_URL)))

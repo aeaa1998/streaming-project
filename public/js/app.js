@@ -113467,8 +113467,8 @@ var TableView = function TableView(props) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/tito/bases-de-datos-class/streaming-project/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/tito/bases-de-datos-class/streaming-project/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/douglasdeleon/DouglasJr/semestre5/bases_de_datos/streaming-project/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/douglasdeleon/DouglasJr/semestre5/bases_de_datos/streaming-project/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
