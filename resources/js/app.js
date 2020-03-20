@@ -14,4 +14,8 @@ require('./bootstrap');
 
 require('./components/Login');
 require('./components/Artists');
+require('./components/Songs');
+require('./components/Albums');
+require('./components/Genres');
+require('./components/Navbar');
 

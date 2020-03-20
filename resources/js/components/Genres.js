@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import TableView from './TableView'
 
-export default class Artists extends Component {
+export default class Genres extends Component {
     constructor(props) {
         super(props);
-        console.log('data from component', JSON.parse(this.props.permissions));
     }
     render() {
         return (
@@ -15,12 +14,12 @@ export default class Artists extends Component {
 
                     <TableView
                         permissions={JSON.parse(this.props.permissions)}
-                        url={"fetch/select artistid as id, name from Artist"}
-                        columns={["Id", "Nombre del Artista"]}
+                        url={"fetch/select genreid as id, name from Genre"}
+                        columns={["Id", "Nombre del Genero"]}
                         errorMessage="Asegurese de que el artista no tenga una cancion o album"
-                        byIdQuery={"select artistid as id, name from Artist"}
-                        idColumn={"artistid"}
-                        table={"Artist"}
+                        byIdQuery={"select genreid as id, name from Genre"}
+                        idColumn={"genreid"}
+                        table={"Genre"}
                         filters={JSON.parse(this.props.filterJson)} />
                 </div>
 
@@ -29,8 +28,8 @@ export default class Artists extends Component {
     }
 }
 
-if (document.getElementById('artists')) {
+if (document.getElementById('genres')) {
     let permissions = document.getElementById('permissions').getAttribute('data')
     let filterJson = document.getElementById('filterJson').getAttribute('data')
-    ReactDOM.render(<Artists permissions={permissions} filterJson={filterJson} />, document.getElementById('artists'));
+    ReactDOM.render(<Genres permissions={permissions} filterJson={filterJson} />, document.getElementById('genres'));
 }

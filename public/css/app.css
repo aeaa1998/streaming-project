@@ -51,6 +51,21 @@
   text-align: center;
 }
 
+.subtitle-1 {
+  font-size: 25px;
+  text-align: center;
+}
+
+.subtitle-2 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.subtitle-3 {
+  font-size: 15px;
+  text-align: center;
+}
+
 .bt-0 {
   border-top: 0;
 }
@@ -10962,6 +10977,14 @@ a.text-dark:focus {
 
 .pointer {
   cursor: pointer;
+}
+
+.default-pointer {
+  cursor: default !important;
+}
+
+.white {
+  color: white !important;
 }
 
 input:focus {

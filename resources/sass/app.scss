@@ -17,6 +17,14 @@
 	cursor: pointer;
 }
 
+.default-pointer {
+	cursor: default!important;
+}
+
+.white{
+	color: white!important;
+}
+
 input:focus {
 	outline: 0;
 	box-shadow: none;
