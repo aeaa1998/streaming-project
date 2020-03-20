@@ -15,13 +15,7 @@ use Illuminate\Support\Facades\DB;
  */
 
 Route::view('/login', 'login');
-Route::get('/artists', function () {
-    return view('artists')->with('rows', json_encode(DB::select(Constants::ARTIST_URL)))
-        ->with('permissions', json_encode([1, 2, 3]))->with(
-            'filteredJson',
-            Constants::ARTIST_FILTERS
-        )->with('createForm', Constants::CREATE_ARTIST);
-});
+Route::get('/artists', 'ViewsController@artists');
 
 Route::get('/genres', function () {
     return view('genres')->with('rows', json_encode(DB::select(Constants::GENRES_URL)))

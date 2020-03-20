@@ -17,10 +17,6 @@
     <div class="container-fluid min-vh-100" style="padding: 0px">
         <div id="navbar"></div>
         <div id="permissions" data='{{ $permissions }}'></div>
-        <div id="rows" data='{{ $rows }}'></div>
-        <div id="filterJson" data='{{ ($filteredJson ? json_encode($filteredJson) : json_encode([])) }}'></div>
-        <div id="createForm" data='{{ ($createForm ? json_encode($createForm) : json_encode([])) }}'></div>
-
         @yield('content')
 
     </div>

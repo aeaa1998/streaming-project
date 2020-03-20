@@ -1,24 +1,28 @@
 .title-1{
-	font-size: 70px;
+	font-size: 70px!important;
 	text-align: center;
 }
 .title-2{
-	font-size: 50px;
+	font-size: 50px!important;
 	text-align: center;
 }
 .title-3{
-	font-size: 30px;
+	font-size: 30px!important;
 	text-align: center;
 }
 .subtitle-1{
-	font-size: 25px;
+	font-size: 25px!important;
 	text-align: center;
 }
 .subtitle-2{
-	font-size: 20px;
+	font-size: 20px!important;
 	text-align: center;
 }
 .subtitle-3{
-	font-size: 15px;
+	font-size: 15px!important;
 	text-align: center;
+}
+
+.show{
+	display: inherit;
 }

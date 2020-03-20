@@ -92,7 +92,7 @@ let rowsFetched = JSON.parse(document.getElementById('rows').getAttribute('data'
 // Permision 3 Delete
 const TableView = (props) => {
     const [selected, setSelected] = useState({})
-    const [rows, setRows] = useState(rowsFetched)
+    const [rows, setRows] = useState(_.sortBy(rowsFetched, ['id']))
     const [isFetching, setIsFetching] = useState(false)
     const [mounted, setMounted] = useState(true)
     const [alert, setAlert] = useState(false)
@@ -400,7 +400,7 @@ const TableView = (props) => {
                                                         <div className="mt-2 subtitle-3 text-left">Valor a cambiar</div>
                                                         {
                                                             (Object.entries(props.filters).filter(([column, json]) => (json["tableName"] === rowKey))[0][1].queryType != undefined) ?
-                                                                <Select fullWidth id={`new-${rowKey}`}>
+                                                                <Select className="white pt-1 mt-1" fullWidth id={`new-${rowKey}`}>
                                                                     {Object.entries(props.filters).filter(([column, json]) => (json["tableName"] === rowKey))[0][1].values.map(json => <MenuItem key={json.id} value={json.id}>{json.name}</MenuItem>)}
                                                                 </Select>
                                                                 :
