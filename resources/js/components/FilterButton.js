@@ -19,12 +19,15 @@ const FilterButton = (props) => {
                     if (props.mounted) {
                         props.fetching(true)
                         let value = setValue(props.column, props.json)
+
                         let url = value ? `filtered/${props.url}/${props.json["column"]}/${value}/${props.json["operator"]}` : props.url
-                        console.log(url)
-                        fetch(url)
+
+                        fetch(`/${url}`)
                             .then(res => res.json())
                             .catch(error => console.error('Error:', error))
-                            .then(response => { props.callback(response) })
+                            .then(response => {
+                                props.callback(response)
+                            })
                     }
                 }
             }

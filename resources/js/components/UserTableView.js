@@ -90,7 +90,7 @@ let rowsFetched = JSON.parse(document.getElementById('rows').getAttribute('data'
 // Permision 1 See
 // Permision 2 Edit
 // Permision 3 Delete
-const TableView = (props) => {
+const UserTableView = (props) => {
     const [selected, setSelected] = useState({})
     const [rows, setRows] = useState(_.sortBy(rowsFetched, ['id']))
     const [isFetching, setIsFetching] = useState(false)
@@ -125,14 +125,14 @@ const TableView = (props) => {
     }
     const handleOpenEditing = () => (setEditing(true))
     const fetchById = (id, callback) => (
-        fetch(`fetch/${props.byIdQuery}/${props.idColumn}/${id}`)
+        fetch(`/fetch/${props.byIdQuery}/${props.idColumn}/${id}`)
             .then(result => result.json())
             .then(data => {
                 callback(); setSelected({ ...data[0] })
-            }).catch(error => (console.log(`fetch/${props.byIdQuery}/${props.idColumn}/${id}`)))
+            }).catch(error => (console.log(`/fetch/${props.byIdQuery}/${props.idColumn}/${id}`)))
     )
     const deleteById = (id) => (
-        fetch('api/delete/id',
+        fetch('/api/delete/id',
             {
                 method: 'PUT', // or 'PUT'
                 body: JSON.stringify({ query: props.url, "columnId": props.idColumn, "id": id, "table": props.table }), // data can be `string` or {object}!
@@ -144,14 +144,14 @@ const TableView = (props) => {
             .then(result => result.json())
             .then(data => {
                 showAlert("Se ha borrado con exito!", "success")
-                setRows(_.sortBy(data, ['id']))
+                setRows(_.sortBy(data, ['id']).filter((data) => data["id"] !== 1))
             }).catch(error => {
                 showAlert(props.errorMessage, "error")
             })
     )
     const updateById = (id, column, value) => {
 
-        fetch("api/update/by/id", {
+        fetch("/api/update/by/id", {
             method: 'PUT', // or 'PUT'
             body: JSON.stringify({ query: props.byIdQuery, columnId: props.idColumn, id: id, column: column, value: value, table: props.table }), // data can be `string` or {object}!
             headers: {
@@ -163,12 +163,12 @@ const TableView = (props) => {
             .then(data => {
                 setIsFetching(true)
                 showAlert("Se ha actualizado con exito!", "success")
-                fetch(props.url)
+                fetch(`/${props.url}`)
                     .then(result => result.json())
                     .then(data => {
                         setMounted(true)
                         setIsFetching(false)
-                        setRows(_.sortBy(data, ['id']))
+                        setRows(_.sortBy(data, ['id']).filter((data) => data["id"] !== 1))
                     }).catch(error => (console.log(error)))
                 setSelected({ ...data[0] })
             }).catch(error => {
@@ -217,14 +217,14 @@ const TableView = (props) => {
                             </div>
                             <div className="col-12 mb-1">
                                 <ClearButton url={props.url} fetching={setIsFetching}
-                                    callback={(response) => { setIsFetching(false); watchPage(0); setRows(_.sortBy(response, ['id'])) }}
+                                    callback={(response) => { setIsFetching(false); watchPage(0); setRows(_.sortBy(response, ['id']).filter((data) => data["id"] !== 1)) }}
                                 />
                             </div>
                             {Object.entries(props.filters).map(([column, json]) =>
                                 <div className="pr-1 pl-1 col-6" key={column}>
                                     <TextField id={column} key={column} label={column} type="search" />
-                                    <FilterButton mounted={mounted} fetching={setIsFetching} url={props.url} json={json} column={column}
-                                        callback={(response) => { setIsFetching(false); watchPage(0); setRows(_.sortBy(response, ['id'])) }} />
+                                    <FilterButton mounted={mounted} fetching={setIsFetching} url={props.specialUrl} json={json} column={column}
+                                        callback={(response) => { setIsFetching(false); watchPage(0); setRows(_.sortBy(response, ['id']).filter((data) => data["id"] !== 1)) }} />
                                 </div>
                             )}
                         </div>
@@ -248,7 +248,7 @@ const TableView = (props) => {
                                                 })
                                                     .then(res => res)
                                                     .catch(error => console.error('Error:', error))
-                                                    .then(response => { setIsFetching(false); watchPage(0); setRows(_.sortBy(response.data, ['id'])); })
+                                                    .then(response => { setIsFetching(false); watchPage(0); setRows(_.sortBy(response, ['id']).filter((data) => data["id"] !== 1)); })
                                             }
                                         }
                                     }
@@ -495,7 +495,7 @@ const TableView = (props) => {
                                                     columns = columns.substring(0, columns.length - 2)
                                                     let data = { query: props.url, table: props.table, "values": values, "columns": columns, "columnId": props.idColumn }
                                                     console.log(data)
-                                                    fetch("api/create", {
+                                                    fetch("/api/create", {
                                                         method: 'POST',
                                                         body: JSON.stringify(data),
                                                         headers: {
@@ -509,7 +509,7 @@ const TableView = (props) => {
                                                                 showAlert("Verifica que metas valores validos", "error")
                                                             } else {
                                                                 showAlert("Se ha agregado con exito", "success")
-                                                                setRows(_.sortBy(response, ['id']))
+                                                                setRows(_.sortBy(response, ['id']).filter((data) => data["id"] !== 1))
                                                             }
                                                         })
                                                     handleCloseAdd()
@@ -530,5 +530,5 @@ const TableView = (props) => {
 
 }
 
-export default TableView;
+export default UserTableView;
 

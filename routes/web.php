@@ -21,6 +21,7 @@ Route::get('/genres', 'ViewsController@genres');
 Route::get('/albums', 'ViewsController@albums');
 Route::get('/songs', 'ViewsController@songs');
 Route::get('/reports', 'ViewsController@reports');
+Route::get('/admin/users', 'AuthViewsController@adminUsers');
 $router->get('fetch/{query}', 'DatabaseController@index');
 $router->get('fetch/{query}/{column}/{value}', 'DatabaseController@byId');
 $router->get('filtered/fetch/{query}/{column}/{value}/{operator}', 'DatabaseController@filtered');

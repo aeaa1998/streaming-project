@@ -5,6 +5,9 @@ namespace App\Http\Utils;
 class Constants
 {
     const ARTIST_URL = "select artistid as id, name from Artist";
+    const USER_URL = "select userid as id, users.name as name, users.email as email, role.name as rol, SubsriptionType.name as subs from users inner join Role on role.roleid = users.roleid
+    inner join SubsriptionType on SubsriptionType.subscriptionTypeId = users.subscriptionTypeId
+     where users.userid != 1";
     const ALBUM_URL = "select Album.albumid as id, Album.title, Artist.name as artista  from Album inner join Artist on Album.artistid = Artist.artistid";
     const GENRES_URL = "select genreid as id, name from Genre";
     const SONGS_URL = "select Track.TrackId as id, Track.name as name, Track.Composer as composer, Track.milliseconds as miliseconds, Artist.name as Name_Artist, Album.title as album, Genre.name as genero from Track inner join Genre on Genre.GenreId = Track.GenreId inner join Album on Album.AlbumId = Track.AlbumId inner join Artist on Artist.artistid = Album.artistid";
@@ -21,6 +24,30 @@ class Constants
             "type" => "text",
             "columnEdit" => "name",
             "tableName" => "name"
+        ],
+    ];
+
+    const USER_FILTERS = [
+        "Id" => [
+            "operator" => "=",
+            "column" => "id",
+            "type" => "number",
+            "tableName" => "id"
+        ],
+        "Nombre Usuario"  => [
+            "operator" => "LIKE",
+            "column" => "users.name",
+            "type" => "text",
+            "columnEdit" => "name",
+            "tableName" => "name"
+        ],
+
+        "Email"  => [
+            "operator" => "LIKE",
+            "column" => "users.email",
+            "type" => "text",
+            "columnEdit" => "email",
+            "tableName" => "email"
         ],
     ];
     const ALBUM_FILTERS = [
@@ -129,6 +156,28 @@ class Constants
         [
             "column" => "name",
             "name" => "Nombre del Artista",
+            "type" => "text",
+            "value" => ""
+        ],
+    ];
+
+
+    const CREATE_USER =        [
+        [
+            "column" => "name",
+            "name" => "Nombre del Usuario",
+            "type" => "text",
+            "value" => ""
+        ],
+        [
+            "column" => "email",
+            "name" => "Email",
+            "type" => "text",
+            "value" => ""
+        ],
+        [
+            "column" => "password",
+            "name" => "Contraseña",
             "type" => "text",
             "value" => ""
         ],

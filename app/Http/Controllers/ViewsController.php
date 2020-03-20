@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Utils\AuthUtils;
 use App\Http\Utils\QueryBuilder;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
 use  App\Http\Utils\Constants;
 
@@ -17,17 +19,19 @@ class ViewsController extends Controller
 
     public function artists()
     {
+
         return view('artists')->with('rows', json_encode(DB::select(Constants::ARTIST_URL)))
-            ->with('permissions', json_encode([1, 2, 3, 4]))->with(
+            ->with('permissions', json_encode(AuthUtils::getPermissions()))->with(
                 'filteredJson',
                 Constants::ARTIST_FILTERS
             )->with('createForm', Constants::CREATE_ARTIST);
     }
 
+
     public function genres()
     {
         return view('genres')->with('rows', json_encode(DB::select(Constants::GENRES_URL)))
-            ->with('permissions', json_encode([1, 2, 3]))->with(
+            ->with('permissions', json_encode(AuthUtils::getPermissions()))->with(
                 'filteredJson',
                 Constants::GENRE_FILTERS
             )->with('createForm', Constants::CREATE_GENRE);
@@ -36,7 +40,7 @@ class ViewsController extends Controller
     public function albums()
     {
         return view('albums')->with('rows', json_encode(DB::select(Constants::ALBUM_URL)))
-            ->with('permissions', json_encode([1, 2, 3]))->with(
+            ->with('permissions', json_encode(AuthUtils::getPermissions()))->with(
                 'filteredJson',
                 array_merge(
                     [
@@ -72,7 +76,7 @@ class ViewsController extends Controller
     public function songs()
     {
         return view('songs')->with('rows', json_encode(DB::select(Constants::SONGS_URL)))
-            ->with('permissions', json_encode([1, 2, 3]))->with(
+            ->with('permissions', json_encode(AuthUtils::getPermissions()))->with(
                 'filteredJson',
                 array_merge([
                     "Album" => [
