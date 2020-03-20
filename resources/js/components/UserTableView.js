@@ -84,8 +84,12 @@ const setValueStandard = (id, json) => {
     }
     return input
 }
-let createForm = JSON.parse(document.getElementById('createForm').getAttribute('data'))
-let rowsFetched = JSON.parse(document.getElementById('rows').getAttribute('data'))
+let createForm = [{}]
+let rowsFetched = [{}]
+if (document.getElementById('createForm') && document.getElementById('rows')) {
+    createForm = JSON.parse(document.getElementById('createForm').getAttribute('data'))
+    rowsFetched = JSON.parse(document.getElementById('rows').getAttribute('data'))
+}
 
 // Permision 1 See
 // Permision 2 Edit

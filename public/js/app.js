@@ -112814,10 +112814,16 @@ var setValueStandard = function setValueStandard(id, json) {
   return input;
 };
 
-var createForm = JSON.parse(document.getElementById('createForm').getAttribute('data'));
-var rowsFetched = JSON.parse(document.getElementById('rows').getAttribute('data')); // Permision 1 See
+var rowsFetched = [{}];
+var createForm = [{}];
+
+if (document.getElementById('createForm') && document.getElementById('rows')) {
+  createForm = JSON.parse(document.getElementById('createForm').getAttribute('data'));
+  rowsFetched = JSON.parse(document.getElementById('rows').getAttribute('data'));
+} // Permision 1 See
 // Permision 2 Edit
 // Permision 3 Delete
+
 
 var TableView = function TableView(props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
@@ -113583,10 +113589,16 @@ var setValueStandard = function setValueStandard(id, json) {
   return input;
 };
 
-var createForm = JSON.parse(document.getElementById('createForm').getAttribute('data'));
-var rowsFetched = JSON.parse(document.getElementById('rows').getAttribute('data')); // Permision 1 See
+var createForm = [{}];
+var rowsFetched = [{}];
+
+if (document.getElementById('createForm') && document.getElementById('rows')) {
+  createForm = JSON.parse(document.getElementById('createForm').getAttribute('data'));
+  rowsFetched = JSON.parse(document.getElementById('rows').getAttribute('data'));
+} // Permision 1 See
 // Permision 2 Edit
 // Permision 3 Delete
+
 
 var UserTableView = function UserTableView(props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
@@ -114323,8 +114335,8 @@ if (document.getElementById('users')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/douglasdeleon/DouglasJr/semestre5/bases_de_datos/streaming-project/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/douglasdeleon/DouglasJr/semestre5/bases_de_datos/streaming-project/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/tito/bases-de-datos-class/streaming-project/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/tito/bases-de-datos-class/streaming-project/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

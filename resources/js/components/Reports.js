@@ -3,7 +3,7 @@ import $ from 'jquery';
 import Popper from 'popper.js';
 import ReactDOM from 'react-dom';
 
-let permissions = document.getElementById('permissions').getAttribute('data')
+
 const Reports = () => {
     const [showing, setShow] = useState(false)
     return (
