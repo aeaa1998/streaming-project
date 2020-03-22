@@ -14,13 +14,14 @@ export default class Songs extends Component {
             <div className="row mt-4">
                 <div className="col-12">
 
-                    <TableView permissions={JSON.parse(this.props.permissions)}
+                    <TableView
                         byIdQuery={queryById}
                         idColumn={"trackid"}
                         errorMessage="Asegurese de que la cancion no dependa de alguien mas"
                         table={"Track"}
-                        url={`fetch/${query}`} columns={["Id", "Nombre", "Compositor", "Milisegundos", "Artista", "Album", "Genero"]}
-                        filters={JSON.parse(this.props.filterJson)} />
+                        url={`fetch/${query}`}
+                        columns={["Id", "Nombre", "Compositor", "Milisegundos", "Artista", "Album", "Genero"]}
+                    />
                 </div>
                 <div className="main-bg"></div>
             </div>
@@ -29,8 +30,5 @@ export default class Songs extends Component {
 }
 
 if (document.getElementById('songs')) {
-    let permissions = document.getElementById('permissions').getAttribute('data')
-    let filterJson = document.getElementById('filterJson').getAttribute('data')
-
-    ReactDOM.render(<Songs permissions={permissions} filterJson={filterJson} />, document.getElementById('songs'));
+    ReactDOM.render(<Songs />, document.getElementById('songs'));
 }

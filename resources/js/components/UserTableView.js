@@ -20,7 +20,12 @@ import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash'
 
-
+if (document.getElementById('permissions')) {
+    permissions = JSON.parse(document.getElementById('permissions').getAttribute('data'))
+}
+if (document.getElementById('filterJson')) {
+    filterJson = JSON.parse(document.getElementById('permissions').getAttribute('data'))
+}
 
 const useStyles = makeStyles(theme => ({
     table: {
@@ -224,7 +229,7 @@ const UserTableView = (props) => {
                                     callback={(response) => { setIsFetching(false); watchPage(0); setRows(_.sortBy(response, ['id']).filter((data) => data["id"] !== 1)) }}
                                 />
                             </div>
-                            {Object.entries(props.filters).map(([column, json]) =>
+                            {Object.entries(filterJson).map(([column, json]) =>
                                 <div className="pr-1 pl-1 col-6" key={column}>
                                     <TextField id={column} key={column} label={column} type="search" />
                                     <FilterButton mounted={mounted} fetching={setIsFetching} url={props.specialUrl} json={json} column={column}
@@ -240,7 +245,7 @@ const UserTableView = (props) => {
                                         () => {
                                             if (mounted) {
                                                 setIsFetching(true)
-                                                let requestJson = Object.entries(props.filters)
+                                                let requestJson = Object.entries(filterJson)
                                                     .map(([column, json]) => ([json["column"], json["operator"], setValue(column, json)]))
                                                     .filter((json) => json[2] != "")
 
@@ -301,8 +306,8 @@ const UserTableView = (props) => {
                                         {Object.entries(row).map(([rowKey, value]) => <TableCell key={rowKey}>{value}</TableCell>)}
                                         <TableCell>
                                             {
-                                                (props.permissions.length != 0 ? (
-                                                    props.permissions.map((value, index) => (iconMaker(value, row)))
+                                                (permissions.length != 0 ? (
+                                                    permissions.map((value, index) => (iconMaker(value, row)))
                                                 ) : "Sin acciones")
                                             }
                                         </TableCell>
@@ -345,7 +350,7 @@ const UserTableView = (props) => {
                                     {Object.entries(selected).map(([rowKey, value]) =>
                                         <div key={rowKey} className="col-6  mb-3 ">
                                             <div className="pl-4 pr-4 card-header subtitle-">
-                                                {Object.entries(props.filters).filter(([column, json]) => (json["tableName"] === rowKey))[0][0]}
+                                                {Object.entries(filterJson).filter(([column, json]) => (json["tableName"] === rowKey))[0][0]}
                                             </div>
                                             <div className="mt-3 text-center subtitle-2">{value}</div>
                                         </div>
@@ -377,7 +382,7 @@ const UserTableView = (props) => {
                                         if (rowKey != "id") {
                                             return <div key={rowKey} className="col-12  mb-2 ">
                                                 <div className="pl-1 pr-1 card-header subtitle-3">
-                                                    {Object.entries(props.filters).filter(([column, json]) => (json["tableName"] === rowKey))[0][0]}
+                                                    {Object.entries(filterJson).filter(([column, json]) => (json["tableName"] === rowKey))[0][0]}
                                                 </div>
                                                 <div className="row">
                                                     <div className="col">
@@ -390,9 +395,9 @@ const UserTableView = (props) => {
                                                     <div className="col">
                                                         <div className="mt-2 subtitle-3 text-left">Valor a cambiar</div>
                                                         {
-                                                            (Object.entries(props.filters).filter(([column, json]) => (json["tableName"] === rowKey))[0][1].queryType != undefined) ?
+                                                            (Object.entries(filterJson).filter(([column, json]) => (json["tableName"] === rowKey))[0][1].queryType != undefined) ?
                                                                 <Select className="white pt-1 mt-1" fullWidth id={`new-${rowKey}`}>
-                                                                    {Object.entries(props.filters).filter(([column, json]) => (json["tableName"] === rowKey))[0][1].values.map(json => <MenuItem key={json.id} value={json.id}>{json.name}</MenuItem>)}
+                                                                    {Object.entries(filterJson).filter(([column, json]) => (json["tableName"] === rowKey))[0][1].values.map(json => <MenuItem key={json.id} value={json.id}>{json.name}</MenuItem>)}
                                                                 </Select>
                                                                 :
                                                                 <TextField id={`new-${rowKey}`} fullWidth variant="filled" InputProps={{
@@ -405,10 +410,9 @@ const UserTableView = (props) => {
 
                                                         {<Send className="mt-5 pointer" fontSize="large"
                                                             onClick={() => {
-                                                                let filterJson = Object.entries(props.filters).filter(([column, json]) => (json["tableName"] === rowKey))[0][1]
+                                                                let filterJson = Object.entries(filterJson).filter(([column, json]) => (json["tableName"] === rowKey))[0][1]
                                                                 let newValue = (filterJson.queryType != undefined) ? document.getElementById(`new-${rowKey}`).nextSibling.value :
                                                                     setValueStandard(`new-${rowKey}`, filterJson)
-
                                                                 let columnToSet = (filterJson.columnEdit != undefined) ? filterJson.columnEdit : filterJson.column
                                                                 if (newValue) {
                                                                     updateById(selected.id, columnToSet, newValue)

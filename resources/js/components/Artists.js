@@ -14,14 +14,13 @@ export default class Artists extends Component {
                 <div className="col-12">
 
                     <TableView
-                        permissions={JSON.parse(this.props.permissions)}
                         url={"fetch/select artistid as id, name from Artist"}
                         columns={["Id", "Nombre del Artista"]}
                         errorMessage="Asegurese de que el artista no tenga una cancion o album"
                         byIdQuery={"select artistid as id, name from Artist"}
                         idColumn={"artistid"}
                         table={"Artist"}
-                        filters={JSON.parse(this.props.filterJson)} />
+                    />
                 </div>
 
             </div>
@@ -30,7 +29,5 @@ export default class Artists extends Component {
 }
 
 if (document.getElementById('artists')) {
-    let permissions = document.getElementById('permissions').getAttribute('data')
-    let filterJson = document.getElementById('filterJson').getAttribute('data')
-    ReactDOM.render(<Artists permissions={permissions} filterJson={filterJson} />, document.getElementById('artists'));
+    ReactDOM.render(<Artists />, document.getElementById('artists'));
 }

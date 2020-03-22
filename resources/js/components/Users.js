@@ -12,7 +12,6 @@ export default class Users extends Component {
             <div className="row mt-4">
                 <div className="col-12">
                     <UserTableView
-                        permissions={JSON.parse(this.props.permissions)}
                         url={query}
                         specialUrl={specialUrl}
                         columns={["Id", "Nombre", "Email", "Rol", "Subscripcion"]}
@@ -20,7 +19,7 @@ export default class Users extends Component {
                         byIdQuery={byId}
                         idColumn={"userid"}
                         table={"users"}
-                        filters={JSON.parse(this.props.filterJson)} />
+                    />
                 </div>
 
             </div>
@@ -29,9 +28,5 @@ export default class Users extends Component {
 }
 
 if (document.getElementById('users')) {
-
-    let permissions = document.getElementById('permissions').getAttribute('data')
-    let filterJson = document.getElementById('filterJson').getAttribute('data')
-
-    ReactDOM.render(<Users permissions={permissions} filterJson={filterJson} />, document.getElementById('users'));
+    ReactDOM.render(<Users />, document.getElementById('users'));
 }
