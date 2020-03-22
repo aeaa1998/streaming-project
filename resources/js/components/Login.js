@@ -60,8 +60,6 @@ const Login = () => {
                                 <a type="button" className="btn btn-success w-100">Crear Cuenta</a>
                             </div>
                         </div>
-                        {/* <div className="w-100 text-center pointer inline-block">Recuperar contraseña</div> */}
-
                     </div>
                 </div>
             </div>
