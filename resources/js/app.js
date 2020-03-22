@@ -19,4 +19,4 @@ require('./components/Albums');
 require('./components/Genres');
 require('./components/Navbar');
 require('./components/Users');
-
+require('./components/Reports')

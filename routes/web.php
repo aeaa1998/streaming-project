@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\DB;
 
 Route::view('/login', 'login');
 Route::get('/artists', 'ViewsController@artists');
-
 Route::get('/genres', 'ViewsController@genres');
 Route::get('/albums', 'ViewsController@albums');
 Route::get('/songs', 'ViewsController@songs');
