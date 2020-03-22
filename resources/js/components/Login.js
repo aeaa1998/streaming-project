@@ -57,7 +57,7 @@ const Login = () => {
                                 <button type="button" className={`btn btn-${(username == "" || password == "") ? 'dark' : 'success'} w-100`} onClick={logIn}>Login</button>
                             </div>
                             <div className="offset-1 col-4">
-                                <a type="button" className="btn btn-success w-100">Crear Cuenta</a>
+                                <a type="button" className="btn btn-success w-100" href="/register">Crear Cuenta</a>
                             </div>
                         </div>
                     </div>
