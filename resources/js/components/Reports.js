@@ -8,25 +8,31 @@ import { Bar } from 'react-chartjs-2';
 const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArtist }) => {
 
     const [report, setReport] = useState('songsByArtist')
+    const BAR_COLORS = ['rgba(255, 0, 0, 0.5)', 'rgba(0, 255, 0, 0.5)', 'rgba(0, 0, 255, 0.5)', 'rgba(0, 255, 255, 0.5)']
 
     let reportLabels;
     let reportData;
+    let reportDataColors;
 
     if (report === 'songsByArtist'){
-        reportLabels = JSON.parse(songsByArtist).map( artist => artist.description)
-        reportData = JSON.parse(songsByArtist).map( artist => artist.quantity)
+        reportLabels = JSON.parse(songsByArtist).map( artist => artist.description);
+        reportData = JSON.parse(songsByArtist).map( artist => artist.quantity);
+        reportDataColors = JSON.parse(songsByArtist).map( ( _ , index) => BAR_COLORS[index % 4]);
     }
     if (report === 'songsByGenre'){
-        reportLabels = JSON.parse(songsByGenre).map(genre => genre.description)
-        reportData = JSON.parse(songsByGenre).map(genre => genre.quantity)
+        reportLabels = JSON.parse(songsByGenre).map(genre => genre.description);
+        reportData = JSON.parse(songsByGenre).map(genre => genre.quantity);
+        reportDataColors = JSON.parse(songsByArtist).map( ( _ , index) => BAR_COLORS[index % 4]);
     }
     if (report === 'avgDurationByGenre'){
-        reportLabels = JSON.parse(avgDurationByGenre).map( genre => genre.description)
-        reportData = JSON.parse(avgDurationByGenre).map( avgDuration => avgDuration.quantity)
+        reportLabels = JSON.parse(avgDurationByGenre).map( genre => genre.description);
+        reportData = JSON.parse(avgDurationByGenre).map( avgDuration => avgDuration.quantity);
+        reportDataColors = JSON.parse(songsByArtist).map( ( _ , index) => BAR_COLORS[index % 4]);
     }
     if (report === 'albumsByArtist'){
-        reportLabels = JSON.parse(albumsByArtist).map( artist => artist.description)
-        reportData = JSON.parse(albumsByArtist).map( artist => artist.quantity)
+        reportLabels = JSON.parse(albumsByArtist).map( artist => artist.description);
+        reportData = JSON.parse(albumsByArtist).map( artist => artist.quantity);
+        reportDataColors = JSON.parse(songsByArtist).map( ( _ , index) => BAR_COLORS[index % 4]);
     }
 
     const state = {
@@ -34,8 +40,8 @@ const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArti
         datasets: [
           {
             label: 'Cantidad',
-            backgroundColor: 'rgba(75,192,192,1)',
-            borderColor: 'rgba(0,0,0,1)',
+            backgroundColor: reportDataColors,
+            borderColor: 'rgba(0,0,0,0.5)',
             borderWidth: 2,
             data: reportData
           }
