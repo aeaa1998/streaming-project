@@ -20,4 +20,4 @@ require('./components/Genres');
 require('./components/Navbar');
 require('./components/Register');
 require('./components/Users');
-
+require('./components/Reports')

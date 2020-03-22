@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 |
  */
 
+
 Route::group(['middleware' => ['guest']], function () {
     Route::view('/login', 'login');
     Route::get('/register', 'ViewsController@register');
@@ -25,6 +26,7 @@ Route::group(['middleware' => ['guest']], function () {
 
 Route::group(['middleware' => ['authenticated']], function () {
     Route::post('/logout', 'AuthController@logout');
+    Route::get('/reports', 'ViewsController@reports');
     Route::get('/genres', 'ViewsController@genres');
     Route::get('/albums', 'ViewsController@albums');
     Route::get('/songs', 'ViewsController@songs')->name('songs');
@@ -32,6 +34,7 @@ Route::group(['middleware' => ['authenticated']], function () {
     Route::get('/admin/users', 'AuthViewsController@adminUsers');
     Route::get('/artists', 'ViewsController@artists');
 });
+
 
 
 

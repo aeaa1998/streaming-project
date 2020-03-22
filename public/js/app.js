@@ -111971,6 +111971,8 @@ __webpack_require__(/*! ./components/Register */ "./resources/js/components/Regi
 
 __webpack_require__(/*! ./components/Users */ "./resources/js/components/Users.js");
 
+__webpack_require__(/*! ./components/Reports */ "./resources/js/components/Reports.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -112153,13 +112155,9 @@ var Artists = /*#__PURE__*/function (_Component) {
   _inherits(Artists, _Component);
 
   function Artists(props) {
-    var _this;
-
     _classCallCheck(this, Artists);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Artists).call(this, props));
-    console.log('data from component', JSON.parse(_this.props.permissions));
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Artists).call(this, props)); // console.log('data from component', JSON.parse(this.props.permissions));
   }
 
   _createClass(Artists, [{
@@ -112524,6 +112522,138 @@ if (document.getElementById('navbar')) {
 /***/ (function(module, exports) {
 
 throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/Users/tito/bases-de-datos-class/streaming-project/resources/js/components/Register.js'");
+
+/***/ }),
+
+/***/ "./resources/js/components/Reports.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/Reports.js ***!
+  \********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var popper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
+!(function webpackMissingModule() { var e = new Error("Cannot find module 'react-chartjs-2'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+var Reports = function Reports(_ref) {
+  var songsByArtist = _ref.songsByArtist,
+      songsByGenre = _ref.songsByGenre,
+      avgDurationByGenre = _ref.avgDurationByGenre,
+      albumsByArtist = _ref.albumsByArtist;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('songsByArtist'),
+      _useState2 = _slicedToArray(_useState, 2),
+      report = _useState2[0],
+      setReport = _useState2[1]; // console.log("songsByArtist", JSON.parse(songsByArtist))
+  // console.log("songsByGenre", JSON.parse(songsByGenre))
+  // console.log("avgDurationByGenre", JSON.parse(avgDurationByGenre))
+  // console.log("albumsByArtist", JSON.parse(albumsByArtist))
+
+
+  var reportLabels;
+  var reportData;
+
+  if (report === 'songsByArtist') {
+    reportLabels = JSON.parse(songsByArtist).map(function (artist) {
+      return artist.description;
+    });
+    reportData = JSON.parse(songsByArtist).map(function (artist) {
+      return artist.quantity;
+    });
+  }
+
+  if (report === 'songsByGenre') {
+    reportLabels = JSON.parse(songsByGenre).map(function (genre) {
+      return genre.description;
+    });
+    reportData = JSON.parse(songsByGenre);
+  }
+
+  if (report === 'avgDurationByGenre') {
+    reportLabels = JSON.parse(avgDurationByGenre);
+    reportData = JSON.parse(avgDurationByGenre);
+  }
+
+  if (report === 'albumsByArtist') {
+    reportLabels = JSON.parse(albumsByArtist);
+    reportData = JSON.parse(albumsByArtist);
+  }
+
+  var state = {
+    labels: reportLabels,
+    datasets: [{
+      label: 'Cantidad',
+      backgroundColor: 'rgba(75,192,192,1)',
+      borderColor: 'rgba(0,0,0,1)',
+      borderWidth: 2,
+      data: reportData
+    }]
+  };
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row mt-4"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col align-self-center"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "hola ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "ac\xE1 ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "iria ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "el ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "menu ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-10 align-self-center"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(!(function webpackMissingModule() { var e = new Error("Cannot find module 'react-chartjs-2'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+    data: state,
+    options: {
+      title: {
+        display: true,
+        text: 'Reporte',
+        fontSize: 20
+      },
+      legend: {
+        display: true,
+        position: 'right'
+      }
+    }
+  })));
+};
+
+if (document.getElementById('reports')) {
+  var _permissions = document.getElementById('permissions').getAttribute('data');
+
+  var songsByGenre = document.getElementById('songsByGenre').getAttribute('data');
+  var albumsByArtist = document.getElementById('albumsByArtist').getAttribute('data');
+  var avgDurationByGenre = document.getElementById('avgDurationByGenre').getAttribute('data');
+  var songsByArtist = document.getElementById('songsByArtist').getAttribute('data');
+  react_dom__WEBPACK_IMPORTED_MODULE_3___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Reports, {
+    permissions: _permissions,
+    songsByGenre: songsByGenre,
+    albumsByArtist: albumsByArtist,
+    avgDurationByGenre: avgDurationByGenre,
+    songsByArtist: songsByArtist
+  }), document.getElementById('reports'));
+}
+
+if (document.getElementById('artists')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_3___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Artists, {
+    permissions: permissions,
+    filterJson: filterJson
+  }), document.getElementById('artists'));
+}
 
 /***/ }),
 
