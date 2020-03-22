@@ -60,10 +60,10 @@ const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArti
                         Reportes
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item" onClick={() => setReport("songsByGenre")}>Géneros con más canciones</li>
-                        <li class="list-group-item" onClick={() => setReport("albumsByArtist")} >Artistas con más albumes</li>
-                        <li class="list-group-item" onClick={() => setReport("avgDurationByGenre")}>Promedio de duración por género</li>
-                        <li class="list-group-item" onClick={() => setReport("songsByArtist")}>Canciones por artista</li>
+                        <li class="list-group-item pointer" onClick={() => setReport("songsByGenre")}>Géneros con más canciones</li>
+                        <li class="list-group-item pointer" onClick={() => setReport("albumsByArtist")} >Artistas con más albumes</li>
+                        <li class="list-group-item pointer" onClick={() => setReport("avgDurationByGenre")}>Promedio de duración por género</li>
+                        <li class="list-group-item pointer" onClick={() => setReport("songsByArtist")}>Canciones por artista</li>
                     </ul>
 
                 </div>
