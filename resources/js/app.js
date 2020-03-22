@@ -17,6 +17,7 @@ require('./components/Artists');
 require('./components/Songs');
 require('./components/Albums');
 require('./components/Genres');
+require('./components/Roles');
 require('./components/Navbar');
 require('./components/Register');
 require('./components/Users');

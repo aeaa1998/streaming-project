@@ -210,13 +210,15 @@ const TableView = (props) => {
             {
                 (mounted ?
                     <div className={classes.alert}>
-                        <div className="row">
-                            <div className="offset-2 col-8">
-                                <Collapse in={alert}>
-                                    <_Alert severity={alertSeverity} >
-                                        {alertMessage}
-                                    </_Alert>
-                                </Collapse>
+                        <div className="col-12">
+                            <div className="row">
+                                <div className="offset-2 col-8">
+                                    <Collapse in={alert}>
+                                        <_Alert severity={alertSeverity} >
+                                            {alertMessage}
+                                        </_Alert>
+                                    </Collapse>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -415,11 +417,11 @@ const TableView = (props) => {
 
                                                         {<Send className="mt-5 pointer" fontSize="large"
                                                             onClick={() => {
-                                                                let filterJson = Object.entries(filterJson).filter(([column, json]) => (json["tableName"] === rowKey))[0][1]
-                                                                let newValue = (filterJson.queryType != undefined) ? document.getElementById(`new-${rowKey}`).nextSibling.value :
-                                                                    setValueStandard(`new-${rowKey}`, filterJson)
+                                                                let filterJsonSelected = Object.entries(filterJson).filter(([column, json]) => (json["tableName"] === rowKey))[0][1]
+                                                                let newValue = (filterJsonSelected.queryType != undefined) ? document.getElementById(`new-${rowKey}`).nextSibling.value :
+                                                                    setValueStandard(`new-${rowKey}`, filterJsonSelected)
 
-                                                                let columnToSet = (filterJson.columnEdit != undefined) ? filterJson.columnEdit : filterJson.column
+                                                                let columnToSet = (filterJsonSelected.columnEdit != undefined) ? filterJsonSelected.columnEdit : filterJsonSelected.column
                                                                 if (newValue) {
                                                                     updateById(selected.id, columnToSet, newValue)
                                                                 }
