@@ -28,7 +28,7 @@ class ViewsController extends Controller
             ON t.genreid = g.genreid
             GROUP BY g.name
             ORDER BY COUNT(*) DESC
-            LIMIT 10;
+            LIMIT 20;
             "
                 )
             )
@@ -43,7 +43,7 @@ class ViewsController extends Controller
             ON ALB.artistid = A.artistid
             GROUP BY A.name
             ORDER BY COUNT(*) DESC
-            LIMIT 10;
+            LIMIT 20;
             "
                 )
             )
@@ -74,7 +74,7 @@ class ViewsController extends Controller
             ON ALB.albumid = T.albumid
             GROUP BY A.name
             ORDER BY COUNT(*) DESC
-            LIMIT 10;
+            LIMIT 20;
             "
                 )
             )

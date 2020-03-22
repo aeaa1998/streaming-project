@@ -9,11 +9,6 @@ const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArti
 
     const [report, setReport] = useState('songsByArtist')
 
-    // console.log("songsByArtist", JSON.parse(songsByArtist))
-    // console.log("songsByGenre", JSON.parse(songsByGenre))
-    // console.log("avgDurationByGenre", JSON.parse(avgDurationByGenre))
-    // console.log("albumsByArtist", JSON.parse(albumsByArtist))
-
     let reportLabels;
     let reportData;
 
@@ -23,15 +18,15 @@ const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArti
     }
     if (report === 'songsByGenre'){
         reportLabels = JSON.parse(songsByGenre).map(genre => genre.description)
-        reportData = JSON.parse(songsByGenre)
+        reportData = JSON.parse(songsByGenre).map(genre => genre.quantity)
     }
     if (report === 'avgDurationByGenre'){
-        reportLabels = JSON.parse(avgDurationByGenre)
-        reportData = JSON.parse(avgDurationByGenre)
+        reportLabels = JSON.parse(avgDurationByGenre).map( genre => genre.description)
+        reportData = JSON.parse(avgDurationByGenre).map( avgDuration => avgDuration.quantity)
     }
     if (report === 'albumsByArtist'){
-        reportLabels = JSON.parse(albumsByArtist)
-        reportData = JSON.parse(albumsByArtist)
+        reportLabels = JSON.parse(albumsByArtist).map( artist => artist.description)
+        reportData = JSON.parse(albumsByArtist).map( artist => artist.quantity)
     }
 
     const state = {
@@ -51,11 +46,16 @@ const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArti
     return (
         <div className="row mt-4">
             <div className="col align-self-center">
-                <div>hola <br/>
-                acá <br/>
-                iria <br/>
-                el <br/>
-                menu <br/>
+                <div class="card">
+                    <div class="card-header">
+                        Reportes
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" onClick={() => setReport("songsByGenre")}>Géneros con más canciones</li>
+                        <li class="list-group-item" onClick={() => setReport("albumsByArtist")} >Artistas con más albumes</li>
+                        <li class="list-group-item" onClick={() => setReport("avgDurationByGenre")}>Promedio de duración por género</li>
+                        <li class="list-group-item" onClick={() => setReport("songsByArtist")}>Canciones por artista</li>
+                    </ul>
                 </div>
             </div>
             
