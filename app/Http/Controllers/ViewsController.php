@@ -14,6 +14,7 @@ class ViewsController extends Controller
     public function reports()
     {
 
+
         return view('reports')->with(
             'permissions',
             json_encode(AuthUtils::getPermissions())
@@ -85,6 +86,7 @@ class ViewsController extends Controller
     {
         return view('register')->with('selectTypes', json_encode(DB::select('select subscriptiontypeid as id, name from subsriptionType where subscriptiontypeid != 1 ')));
     }
+
 
     public function artists()
     {

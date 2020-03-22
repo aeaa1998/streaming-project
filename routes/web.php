@@ -28,6 +28,14 @@ Route::group(['middleware' => ['authenticated']], function () {
     Route::post('/logout', 'AuthController@logout');
     Route::get('/reports', 'ViewsController@reports');
     Route::get('/genres', 'ViewsController@genres');
+    Route::get('/admin/roles', 'RolesController@roles');
+    Route::get('fetch/roles', 'RolesController@getRoles');
+    Route::get('fetch/roles/by/name', 'RolesController@getRolesByName');
+    Route::get('fetch/roles/by/permission', 'RolesController@getRolesByPermission');
+    Route::get('fetch/roles/by/both', 'RolesController@getRolesByBoth');
+    Route::put('edit/role', 'RolesController@edit');
+    Route::post('delete/role/{id}', 'RolesController@delete');
+    Route::post('create/role', 'RolesController@create');
     Route::get('/albums', 'ViewsController@albums');
     Route::get('/songs', 'ViewsController@songs')->name('songs');
     Route::get('/reports', 'ViewsController@reports');
