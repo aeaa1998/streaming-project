@@ -111967,6 +111967,8 @@ __webpack_require__(/*! ./components/Genres */ "./resources/js/components/Genres
 
 __webpack_require__(/*! ./components/Navbar */ "./resources/js/components/Navbar.js");
 
+__webpack_require__(/*! ./components/Register */ "./resources/js/components/Register.js");
+
 __webpack_require__(/*! ./components/Users */ "./resources/js/components/Users.js");
 
 /***/ }),
@@ -112370,92 +112372,9 @@ if (document.getElementById('genres')) {
   !*** ./resources/js/components/Login.js ***!
   \******************************************/
 /*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
-
-var Login = function Login() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
-      _useState2 = _slicedToArray(_useState, 2),
-      username = _useState2[0],
-      watchUsername = _useState2[1];
-
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
-      _useState4 = _slicedToArray(_useState3, 2),
-      passowrd = _useState4[0],
-      watchPassword = _useState4[1];
-
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: ""
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-    autoPlay: true,
-    muted: true,
-    loop: true,
-    className: "chill-video"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-    src: "/videos/chill.mp4",
-    type: "video/mp4"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: true
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "offset-4 col-md-4 main-bg-t p-4"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "min-vh-30 text-light"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "title-3"
-  }, "Iniciar sesi\xF3n"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    className: "form-input w-100 mt-2 mb-2 bt-0 bl-0 br-0",
-    type: "text",
-    placeholder: "Usuario",
-    onChange: function onChange(e) {
-      return watchUsername(e.target.value);
-    },
-    value: username
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    className: "form-input w-100 mt-2 mb-2 bt-0 bl-0 br-0",
-    type: "text",
-    placeholder: "Constrase\xF1a",
-    onChange: function onChange(e) {
-      return watchPassword(e.target.value);
-    },
-    value: passowrd
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row mt-3 mb-3"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "offset-2 col-3"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "button",
-    className: "btn btn-dark w-100"
-  }, "Login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "offset-1 col-4"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "button",
-    className: "btn btn-dark w-100"
-  }, "Crear Cuenta"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "w-100 text-center pointer inline-block"
-  }, "Recuperar contrase\xF1a")))));
-};
-
-if (document.getElementById('login')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Login, null), document.getElementById('login'));
-}
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/Users/tito/bases-de-datos-class/streaming-project/resources/js/components/Login.js'");
 
 /***/ }),
 
@@ -112487,7 +112406,26 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var permissions = document.getElementById('permissions').getAttribute('data');
+var permissions = [];
+
+if (document.getElementById('permissions')) {
+  permissions = document.getElementById('permissions').getAttribute('data');
+}
+
+var logout = function logout() {
+  fetch("/logout", {
+    method: 'POST',
+    // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': jquery__WEBPACK_IMPORTED_MODULE_1___default()('meta[name="csrf-token"]').attr('content')
+    }
+  }).then(function (response) {
+    if (response.redirected) {
+      window.location.href = response.url;
+    }
+  });
+};
 
 var Navbar = function Navbar() {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
@@ -112567,13 +112505,25 @@ var Navbar = function Navbar() {
     href: "/admin/roles"
   }, "Roles"))) : ""), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "btn btn-info my-2 my-sm-0 white",
-    type: "submit"
+    type: "submit",
+    onClick: logout
   }, "Salir")));
 };
 
 if (document.getElementById('navbar')) {
   react_dom__WEBPACK_IMPORTED_MODULE_3___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Navbar, null), document.getElementById('navbar'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/components/Register.js":
+/*!*********************************************!*\
+  !*** ./resources/js/components/Register.js ***!
+  \*********************************************/
+/*! no exports provided */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/Users/tito/bases-de-datos-class/streaming-project/resources/js/components/Register.js'");
 
 /***/ }),
 

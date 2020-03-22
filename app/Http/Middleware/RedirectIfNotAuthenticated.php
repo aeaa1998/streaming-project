@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class RedirectIfAuthenticated
+class RedirectIfNotAuthenticated
 {
     /**
      * Handle an incoming request.
@@ -17,8 +17,8 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($request->session()->has('user_id')) {
-            return redirect('/artists');
+        if (!$request->session()->has('user_id')) {
+            return redirect('/login');
         }
 
         return $next($request);

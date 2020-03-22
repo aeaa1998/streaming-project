@@ -14,14 +14,27 @@ use Illuminate\Support\Facades\DB;
 |
  */
 
-Route::view('/login', 'login');
-Route::get('/artists', 'ViewsController@artists');
+Route::group(['middleware' => ['guest']], function () {
+    Route::view('/login', 'login');
+    Route::get('/register', 'ViewsController@register');
+    Route::post('/register/user', 'AuthController@register');
+    Route::get('/auth/user/{username}/{password}', 'AuthController@login');
+});
 
-Route::get('/genres', 'ViewsController@genres');
-Route::get('/albums', 'ViewsController@albums');
-Route::get('/songs', 'ViewsController@songs');
-Route::get('/reports', 'ViewsController@reports');
-Route::get('/admin/users', 'AuthViewsController@adminUsers');
+
+
+Route::group(['middleware' => ['authenticated']], function () {
+    Route::post('/logout', 'AuthController@logout');
+    Route::get('/genres', 'ViewsController@genres');
+    Route::get('/albums', 'ViewsController@albums');
+    Route::get('/songs', 'ViewsController@songs')->name('songs');
+    Route::get('/reports', 'ViewsController@reports');
+    Route::get('/admin/users', 'AuthViewsController@adminUsers');
+    Route::get('/artists', 'ViewsController@artists');
+});
+
+
+
 $router->get('fetch/{query}', 'DatabaseController@index');
 $router->get('fetch/{query}/{column}/{value}', 'DatabaseController@byId');
 $router->get('filtered/fetch/{query}/{column}/{value}/{operator}', 'DatabaseController@filtered');

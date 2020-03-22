@@ -37,7 +37,7 @@
 }
 
 .transparent-bg {
-  background: rgba(167, 96, 70, 0);
+  background: rgba(167, 96, 70, 0) !important;
 }
 
 .title-1 {
@@ -10993,6 +10993,41 @@ a.text-dark:focus {
 
 .white {
   color: white !important;
+}
+
+.mt-30 {
+  margin-top: 13rem;
+}
+
+.alert-sign {
+  top: 2rem;
+  left: 25%;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: inherit;
+}
+
+.input-bg {
+  background: rgba(0, 0, 0, 0.09);
+}
+
+.input-color {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.no-border {
+  border: 0;
+}
+
+select:focus {
+  outline: 0;
+  box-shadow: none !important;
+  border: 0 !important;
 }
 
 input:focus {

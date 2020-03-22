@@ -2,8 +2,24 @@ import React, { Component, useState } from 'react';
 import $ from 'jquery';
 import Popper from 'popper.js';
 import ReactDOM from 'react-dom';
-
-let permissions = document.getElementById('permissions').getAttribute('data')
+let permissions = []
+if (document.getElementById('permissions')) {
+    permissions = document.getElementById('permissions').getAttribute('data')
+}
+const logout = () => {
+    fetch("/logout", {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url
+            }
+        })
+}
 const Navbar = () => {
     const [showing, setShow] = useState(false)
     return (
@@ -48,7 +64,7 @@ const Navbar = () => {
 
                 </div>
 
-                <button className="btn btn-info my-2 my-sm-0 white" type="submit">Salir</button>
+                <button className="btn btn-info my-2 my-sm-0 white" type="submit" onClick={logout}>Salir</button>
 
             </div>
         </nav >

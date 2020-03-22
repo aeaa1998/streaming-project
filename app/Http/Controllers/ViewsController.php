@@ -14,7 +14,12 @@ class ViewsController extends Controller
 
     public function reports()
     {
-        return view('reports')->with('permissions', json_encode([1, 2, 3]) );
+        return view('reports')->with('permissions', json_encode([1, 2, 3]));
+    }
+
+    public function register()
+    {
+        return view('register')->with('selectTypes', json_encode(DB::select('select subscriptiontypeid as id, name from subsriptionType where subscriptiontypeid != 1 ')));
     }
 
     public function artists()
