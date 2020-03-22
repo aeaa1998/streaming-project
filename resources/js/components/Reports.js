@@ -14,7 +14,6 @@ const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArti
     let reportData;
     let reportDataColors;
 
-<<<<<<< HEAD
     if (report === 'songsByArtist'){
         reportLabels = JSON.parse(songsByArtist).map( artist => artist.description);
         reportData = JSON.parse(songsByArtist).map( artist => artist.quantity);
@@ -34,33 +33,11 @@ const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArti
         reportLabels = JSON.parse(albumsByArtist).map( artist => artist.description);
         reportData = JSON.parse(albumsByArtist).map( artist => artist.quantity);
         reportDataColors = JSON.parse(songsByArtist).map( ( _ , index) => BAR_COLORS[index % 4]);
-=======
-
-    if (report === 'songsByArtist') {
-        reportLabels = JSON.parse(songsByArtist).map(artist => artist.description)
-        reportData = JSON.parse(songsByArtist).map(artist => artist.quantity)
-    }
-    if (report === 'songsByGenre') {
-        reportLabels = JSON.parse(songsByGenre).map(genre => genre.description)
-        reportData = JSON.parse(songsByGenre).map(genre => genre.quantity)
-    }
-
-    if (report === 'avgDurationByGenre') {
-        reportLabels = JSON.parse(avgDurationByGenre).map(genre => genre.description)
-        reportData = JSON.parse(avgDurationByGenre).map(avgDuration => avgDuration.quantity)
-    }
-    if (report === 'albumsByArtist') {
-        reportLabels = JSON.parse(albumsByArtist).map(artist => artist.description)
-        reportData = JSON.parse(albumsByArtist).map(artist => artist.quantity)
-
-
->>>>>>> d7fcbefb713023b7f4d9e934b6946dca38e14a1d
     }
 
     const state = {
         labels: reportLabels,
         datasets: [
-<<<<<<< HEAD
           {
             label: 'Cantidad',
             backgroundColor: reportDataColors,
@@ -68,17 +45,6 @@ const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArti
             borderWidth: 2,
             data: reportData
           }
-=======
-
-            {
-                label: 'Cantidad',
-                backgroundColor: 'rgba(75,192,192,1)',
-                borderColor: 'rgba(0,0,0,1)',
-                borderWidth: 2,
-                data: reportData
-            }
-
->>>>>>> d7fcbefb713023b7f4d9e934b6946dca38e14a1d
         ]
     }
 
