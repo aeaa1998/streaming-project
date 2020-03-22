@@ -26,7 +26,7 @@ if (document.getElementById('permissions')) {
     permissions = JSON.parse(document.getElementById('permissions').getAttribute('data'))
 }
 if (document.getElementById('filterJson')) {
-    filterJson = JSON.parse(document.getElementById('permissions').getAttribute('data'))
+    filterJson = JSON.parse(document.getElementById('filterJson').getAttribute('data'))
 }
 
 

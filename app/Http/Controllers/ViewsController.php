@@ -16,7 +16,7 @@ class ViewsController extends Controller
 
         return view('reports')->with(
             'permissions',
-            json_encode([1, 2, 3])
+            json_encode(AuthUtils::getPermissions())
         )->with(
             'songsByGenre',
             json_encode(

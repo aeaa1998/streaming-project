@@ -20,11 +20,14 @@ import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash'
 
+
+let permissions = []
+let filterJson = [{}]
 if (document.getElementById('permissions')) {
     permissions = JSON.parse(document.getElementById('permissions').getAttribute('data'))
 }
 if (document.getElementById('filterJson')) {
-    filterJson = JSON.parse(document.getElementById('permissions').getAttribute('data'))
+    filterJson = JSON.parse(document.getElementById('filterJson').getAttribute('data'))
 }
 
 const useStyles = makeStyles(theme => ({
