@@ -50,7 +50,7 @@ const Login = () => {
                     <div className="min-vh-30 text-light">
                         <div className="title-3">Iniciar sesión</div>
                         <TextField fullWidth required className="mt-2 white" variant="filled" label="Email" value={username} onChange={(e) => watchUsername(e.target.value)} />
-                        <TextField fullWidth required className="mt-2 white" variant="filled" label="Constraseña" value={password} onChange={(e) => watchPassword(e.target.value)} />
+                        <TextField fullWidth required className="mt-2 white" variant="filled" type="password" label="Constraseña" value={password} onChange={(e) => watchPassword(e.target.value)} />
 
                         <div className="row mt-3 mb-3">
                             <div className="offset-2 col-3">
