@@ -15,71 +15,15 @@ class ViewsController extends Controller
     {
 
 
-        return view('reports')->with(
-            'permissions',
-            json_encode(AuthUtils::getPermissions())
-        )->with(
-            'songsByGenre',
-            json_encode(
-                DB::select(
-                    "
-            SELECT g.name as description, COUNT(*) as quantity
-            FROM track t
-            INNER JOIN genre g
-            ON t.genreid = g.genreid
-            GROUP BY g.name
-            ORDER BY COUNT(*) DESC
-            LIMIT 20;
-            "
-                )
-            )
-        )->with(
-            'albumsByArtist',
-            json_encode(
-                DB::select(
-                    "
-            SELECT A.name as description, COUNT(*) as quantity
-            FROM album ALB
-            INNER JOIN artist A
-            ON ALB.artistid = A.artistid
-            GROUP BY A.name
-            ORDER BY COUNT(*) DESC
-            LIMIT 20;
-            "
-                )
-            )
-        )->with(
-            'avgDurationByGenre',
-            json_encode(
-                DB::select(
-                    "
-            SELECT G.name as description, AVG(T.milliseconds) as quantity
-            FROM genre G
-            INNER JOIN track T
-            ON G.genreid = T.genreid
-            GROUP BY G.name
-            ORDER BY AVG(T.milliseconds) DESC;
-            "
-                )
-            )
-        )->with(
-            'songsByArtist',
-            json_encode(
-                DB::select(
-                    "
-            SELECT A.name as description, COUNT(*) as quantity
-            FROM artist A
-            INNER JOIN album ALB 
-            ON ALB.artistid = A.artistid
-            INNER JOIN track T 
-            ON ALB.albumid = T.albumid
-            GROUP BY A.name
-            ORDER BY COUNT(*) DESC
-            LIMIT 20;
-            "
-                )
-            )
-        );
+        return view('reports')->with('permissions',json_encode(AuthUtils::getPermissions())
+        )->with('albumsByArtist', json_encode(DB::select(Constants::ALBUMS_BY_ARTIST))
+        )->with('songsByGenre', json_encode(DB::select(Constants::SONGS_BY_GENRE))
+        )->with('durationByPlaylist', json_encode(DB::select(Constants::DURATION_BY_PLAYLIST))
+        )->with('durationBySong', json_encode(DB::select(Constants::DURATION_BY_SONG))
+        )->with('songsByArtist', json_encode(DB::select(Constants::SONGS_BY_ARTIST))
+        )->with('durationByGenre', json_encode(DB::select(Constants::DURATION_BY_GENRE))
+        )->with('artistByPlaylist', json_encode(DB::select(Constants::ARTIST_BY_PLAYLIST))
+        )->with('genresByArtist', json_encode(DB::select(Constants::GENRES_BY_ARTIST)) );
     }
 
     public function register()

@@ -5,41 +5,97 @@ import ReactDOM from 'react-dom';
 import { Bar } from 'react-chartjs-2';
 
 
-const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArtist }) => {
+const Reports = ({ 
+    albumsByArtist,
+    songsByGenre,
+    durationByPlaylist,
+    durationBySong,
+    songsByArtist,
+    durationByGenre,
+    artistByPlaylist,
+    genresByArtist,
+ }) => {
 
     const [report, setReport] = useState('songsByArtist')
     const BAR_COLORS = ['rgba(255, 0, 0, 0.5)', 'rgba(0, 255, 0, 0.5)', 'rgba(0, 0, 255, 0.5)', 'rgba(0, 255, 255, 0.5)']
+    const labels = [ 'albumsByArtist', 'songsByGenre', 'durationByPlaylist', 'durationBySong', 'songsByArtist', 'durationByGenre', 'artistByPlaylist', 'genresByArtist']
 
+    let label;
     let reportLabels;
     let reportData;
     let reportDataColors;
 
-    if (report === 'songsByArtist') {
-        reportLabels = JSON.parse(songsByArtist).map(artist => artist.description);
-        reportData = JSON.parse(songsByArtist).map(artist => artist.quantity);
-        reportDataColors = JSON.parse(songsByArtist).map((_, index) => BAR_COLORS[index % 4]);
-    }
-    if (report === 'songsByGenre') {
-        reportLabels = JSON.parse(songsByGenre).map(genre => genre.description);
-        reportData = JSON.parse(songsByGenre).map(genre => genre.quantity);
-        reportDataColors = JSON.parse(songsByArtist).map((_, index) => BAR_COLORS[index % 4]);
-    }
-    if (report === 'avgDurationByGenre') {
-        reportLabels = JSON.parse(avgDurationByGenre).map(genre => genre.description);
-        reportData = JSON.parse(avgDurationByGenre).map(avgDuration => avgDuration.quantity);
-        reportDataColors = JSON.parse(songsByArtist).map((_, index) => BAR_COLORS[index % 4]);
-    }
-    if (report === 'albumsByArtist') {
-        reportLabels = JSON.parse(albumsByArtist).map(artist => artist.description);
-        reportData = JSON.parse(albumsByArtist).map(artist => artist.quantity);
-        reportDataColors = JSON.parse(songsByArtist).map((_, index) => BAR_COLORS[index % 4]);
+    switch(report) {
+        case "albumsByArtist": {
+            label = labels[0]
+            reportLabels = JSON.parse(albumsByArtist).map(i => i.description);
+            reportData = JSON.parse(albumsByArtist).map(i => i.quantity);
+            reportDataColors = JSON.parse(albumsByArtist).map((_, index) => BAR_COLORS[index % 4]);
+            break;
+        }
+        case "songsByGenre": {
+            label = labels[1]
+            reportLabels = JSON.parse(songsByGenre).map(i => i.description);
+            reportData = JSON.parse(songsByGenre).map(i => i.quantity);
+            reportDataColors = JSON.parse(songsByGenre).map((_, index) => BAR_COLORS[index % 4]);
+            break;
+        }
+        case "durationByPlaylist": {
+            label = labels[2]
+            reportLabels = JSON.parse(durationByPlaylist).map(i => i.description);
+            reportData = JSON.parse(durationByPlaylist).map(i => i.quantity);
+            reportDataColors = JSON.parse(durationByPlaylist).map((_, index) => BAR_COLORS[index % 4]);
+            break;
+        }
+        case "durationBySong": {
+            label = labels[3]
+            reportLabels = JSON.parse(durationBySong).map(i => i.description);
+            reportData = JSON.parse(durationBySong).map(i => i.quantity);
+            reportDataColors = JSON.parse(durationBySong).map((_, index) => BAR_COLORS[index % 4]);
+            break;
+        }
+        case "songsByArtist": {
+            label = labels[4]
+            reportLabels = JSON.parse(songsByArtist).map(i => i.description);
+            reportData = JSON.parse(songsByArtist).map(i => i.quantity);
+            reportDataColors = JSON.parse(songsByArtist).map((_, index) => BAR_COLORS[index % 4]);
+            break;
+        }
+        case "durationByGenre": {
+            label = labels[5]
+            reportLabels = JSON.parse(durationByGenre).map(i => i.description);
+            reportData = JSON.parse(durationByGenre).map(i => i.quantity);
+            reportDataColors = JSON.parse(durationByGenre).map((_, index) => BAR_COLORS[index % 4]);
+            break;
+        }
+        case "artistByPlaylist": {
+            label = labels[6]
+            reportLabels = JSON.parse(artistByPlaylist).map(i => i.description);
+            reportData = JSON.parse(artistByPlaylist).map(i => i.quantity);
+            reportDataColors = JSON.parse(artistByPlaylist).map((_, index) => BAR_COLORS[index % 4]);
+            break;
+        }
+        case "genresByArtist": {
+            label = labels[7]
+            reportLabels = JSON.parse(genresByArtist).map(i => i.description);
+            reportData = JSON.parse(genresByArtist).map(i => i.quantity);
+            reportDataColors = JSON.parse(genresByArtist).map((_, index) => BAR_COLORS[index % 4]);
+            break;
+        }
+        default: {
+            label = labels[0]
+            reportLabels = JSON.parse(albumsByArtist).map(i => i.description);
+            reportData = JSON.parse(albumsByArtist).map(i => i.quantity);
+            reportDataColors = JSON.parse(albumsByArtist).map((_, index) => BAR_COLORS[index % 4]);
+            break;
+        }
     }
 
     const state = {
         labels: reportLabels,
         datasets: [
             {
-                label: 'Cantidad',
+                label: label,
                 backgroundColor: reportDataColors,
                 borderColor: 'rgba(0,0,0,0.5)',
                 borderWidth: 2,
@@ -58,10 +114,14 @@ const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArti
                         Reportes
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item pointer" onClick={() => setReport("songsByGenre")}>Géneros con más canciones</li>
-                        <li class="list-group-item pointer" onClick={() => setReport("albumsByArtist")} >Artistas con más albumes</li>
-                        <li class="list-group-item pointer" onClick={() => setReport("avgDurationByGenre")}>Promedio de duración por género</li>
-                        <li class="list-group-item pointer" onClick={() => setReport("songsByArtist")}>Canciones por artista</li>
+                        <li class="list-group-item pointer" onClick={() => setReport("albumsByArtist")}> albumsByArtist </li>
+                        <li class="list-group-item pointer" onClick={() => setReport("songsByGenre")}> songsByGenre </li>
+                        <li class="list-group-item pointer" onClick={() => setReport("durationByPlaylist")}> durationByPlaylist </li>
+                        <li class="list-group-item pointer" onClick={() => setReport("durationBySong")}> durationBySong </li>
+                        <li class="list-group-item pointer" onClick={() => setReport("songsByArtist")}> songsByArtist </li>
+                        <li class="list-group-item pointer" onClick={() => setReport("durationByGenre")}> durationByGenre </li>
+                        <li class="list-group-item pointer" onClick={() => setReport("artistByPlaylist")}> artistByPlaylist </li>
+                        <li class="list-group-item pointer" onClick={() => setReport("genresByArtist")}> genresByArtist </li>
                     </ul>
 
                 </div>
@@ -88,22 +148,28 @@ const Reports = ({ songsByArtist, songsByGenre, avgDurationByGenre, albumsByArti
 }
 
 if (document.getElementById('reports')) {
-    let permissions = document.getElementById('permissions').getAttribute('data')
-    let songsByGenre = document.getElementById('songsByGenre').getAttribute('data')
-    let albumsByArtist = document.getElementById('albumsByArtist').getAttribute('data')
-    let avgDurationByGenre = document.getElementById('avgDurationByGenre').getAttribute('data')
-    let songsByArtist = document.getElementById('songsByArtist').getAttribute('data')
+
+    let albumsByArtist = document.getElementById('albumsByArtist').getAttribute('data');
+    let songsByGenre = document.getElementById('songsByGenre').getAttribute('data');
+    let durationByPlaylist = document.getElementById('durationByPlaylist').getAttribute('data');
+    let durationBySong = document.getElementById('durationBySong').getAttribute('data');
+    let songsByArtist = document.getElementById('songsByArtist').getAttribute('data');
+    let durationByGenre = document.getElementById('durationByGenre').getAttribute('data');
+    let artistByPlaylist = document.getElementById('artistByPlaylist').getAttribute('data');
+    let genresByArtist = document.getElementById('genresByArtist').getAttribute('data');
 
     ReactDOM.render(<Reports
         permissions={permissions}
-        songsByGenre={songsByGenre}
+        
         albumsByArtist={albumsByArtist}
-        avgDurationByGenre={avgDurationByGenre}
+        songsByGenre={songsByGenre}
+        durationByPlaylist={durationByPlaylist}
+        durationBySong={durationBySong}
         songsByArtist={songsByArtist}
+        durationByGenre={durationByGenre}
+        artistByPlaylist={artistByPlaylist}
+        genresByArtist={genresByArtist}
+
     />, document.getElementById('reports'));
 }
 
-if (document.getElementById('artists')) {
-
-    ReactDOM.render(<Artists permissions={permissions} filterJson={filterJson} />, document.getElementById('artists'));
-}

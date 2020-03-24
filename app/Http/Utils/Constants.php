@@ -4,6 +4,97 @@ namespace App\Http\Utils;
 
 class Constants
 {
+    const ALBUMS_BY_ARTIST = "
+        -- Artistas con más albumes publicados (albumsByArtists)
+        SELECT A.name as description, COUNT(*) as quantity
+        FROM album ALB
+        INNER JOIN artist A
+        ON ALB.artistid = A.artistid
+        GROUP BY A.name 
+        ORDER BY COUNT(*) DESC
+        LIMIT 10;
+    ";
+    const SONGS_BY_GENRE = "
+        -- Géneros con más canciones
+        SELECT g.name as description, COUNT(*) as quantity
+        FROM track t
+        INNER JOIN genre g
+        ON t.genreid = g.genreid
+        GROUP BY g.name
+        ORDER BY COUNT(*) DESC
+        LIMIT 20;
+    ";
+    const DURATION_BY_PLAYLIST = "
+        -- Total de duración de cada playlist (segundos)
+        SELECT PL.name as description, SUM(T.milliseconds)/1000 as quantity
+        FROM playlisttrack PLT
+        INNER JOIN playlist PL
+        ON PL.playlistid = PLT.playlistid
+        INNER JOIN track T
+        ON T.trackid = PLT.trackid
+        GROUP BY PL.name, PL.playlistid
+        ORDER BY SUM(T.milliseconds) DESC;
+    ";
+    const DURATION_BY_SONG = "
+        -- Canciones de mayor duración con la información de sus artistas
+        SELECT (T.name, A.name) as description, T.milliseconds as quantity
+        FROM track T 
+        INNER JOIN album ALB
+        ON T.albumid = ALB.albumid
+        INNER JOIN artist A
+        ON ALB.artistid = A.artistid
+        ORDER BY T.milliseconds DESC
+        LIMIT 5;
+    ";
+    const SONGS_BY_ARTIST = "
+        -- Artistas que han registrado más canciones (songsByArtists)
+        SELECT A.name as description, COUNT(*) as quantity
+        FROM artist A
+        INNER JOIN album ALB 
+        ON ALB.artistid = A.artistid
+        INNER JOIN track T 
+        ON ALB.albumid = T.albumid
+        GROUP BY A.name
+        ORDER BY COUNT(*) DESC
+        LIMIT 10;
+    ";
+    const DURATION_BY_GENRE = "
+        -- Promedio de duración de canciones por género
+        SELECT G.name as description, AVG(T.milliseconds) as quantity
+        FROM genre G
+        INNER JOIN track T
+        ON G.genreid = T.genreid
+        GROUP BY G.name
+        ORDER BY AVG(T.milliseconds) DESC;
+    ";
+    const ARTIST_BY_PLAYLIST = "
+        -- Cantidad de artistas diferentes por playlist
+        SELECT PL.name as description, COUNT (DISTINCT A.artistid) as quantity
+        FROM playlist PL 
+        INNER JOIN playlisttrack PLT 
+        ON PL.playlistid = PLT.playlistid
+        INNER JOIN track T
+        ON T.trackid = PLT.trackid
+        INNER JOIN album ALB
+        ON T.albumid = ALB.albumid
+        INNER JOIN artist A 
+        ON ALB.artistid = A.artistid
+        GROUP BY PL.name, PL.playlistid
+        ORDER BY COUNT(DISTINCT A.artistid) DESC;
+    ";
+    const GENRES_BY_ARTIST = "
+        -- Los artistas con más diversidad de géneros musicales
+        SELECT A.name as description, COUNT(DISTINCT T.genreid) as quantity
+        FROM album ALB
+        INNER JOIN artist A
+        ON ALB.artistid = A.artistid
+        INNER JOIN track T 
+        ON ALB.albumid = T.albumid
+        GROUP BY A.name, A.artistid
+        ORDER BY COUNT(DISTINCT T.genreid) DESC
+        LIMIT 10;
+    ";
+
     const ARTIST_URL = "select artistid as id, name from Artist";
     const USER_URL = "select userid as id, users.name as name, users.email as email, role.name as rol, SubsriptionType.name as subs from users inner join Role on role.roleid = users.roleid
     inner join SubsriptionType on SubsriptionType.subscriptionTypeId = users.subscriptionTypeId
