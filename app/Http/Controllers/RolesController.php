@@ -251,7 +251,6 @@ class RolesController extends Controller
 
     public function create(Request $request)
     {
-
         $name = $request->name;
 
         $role = DB::select(DB::raw("INSERT INTO role (name) VALUES ('{$name}') returning roleid"));

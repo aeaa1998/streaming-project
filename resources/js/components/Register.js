@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom';
 import { TextField, InputLabel } from '@material-ui/core';
 let types = [{}]
 if (document.getElementById("types-register")) {
-    types = JSON.parse(document.getElementById("types-register").getAttribute("data"))
+
+    types = JSON.parse(
+        document.getElementById("types-register").getAttribute("data")
+    )
 }
 function isValidEmail(mail) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
@@ -115,6 +118,5 @@ const Register = () => {
 }
 
 if (document.getElementById('register')) {
-
     ReactDOM.render(<Register />, document.getElementById('register'));
 }

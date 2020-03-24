@@ -6,7 +6,6 @@ import TableView from './TableView'
 export default class Artists extends Component {
     constructor(props) {
         super(props);
-        // console.log('data from component', JSON.parse(this.props.permissions));
     }
     render() {
         return (

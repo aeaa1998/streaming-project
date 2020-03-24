@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Utils\QueryBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use  App\Http\Utils\Constants;
 
 class DatabaseController extends Controller
 {
@@ -23,7 +24,6 @@ class DatabaseController extends Controller
 	}
 	public function byId($query, $column, $value)
 	{
-
 		$value = str_replace("-----", "/", $value);
 		$value = str_replace("+=+", "%", $value);
 
@@ -90,6 +90,23 @@ class DatabaseController extends Controller
 		}
 
 		return DB::select(QueryBuilder::buildQuery($parameters, $query));
+		// return DB::select(QueryBuilder::build($value, $column, $operator, $query));
+	}
+
+	public function deactivateSong($id)
+	{
+
+		DB::statement("update Track set isactive = 0 where trackid = {$id}");
+		return DB::select(Constants::SONGS_URL);
+		// return DB::select(QueryBuilder::build($value, $column, $operator, $query));
+	}
+
+
+	public function activateSong($id)
+	{
+
+		DB::statement("update Track set isactive = 1 where trackid = {$id}");
+		return DB::select(Constants::SONGS_URL);
 		// return DB::select(QueryBuilder::build($value, $column, $operator, $query));
 	}
 }

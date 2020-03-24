@@ -5,9 +5,9 @@ import { TextField } from '@material-ui/core';
 const Login = () => {
     const [username, watchUsername] = useState("");
     const [password, watchPassword] = useState("");
-    const [invalidCredentials, setInvalidCredentials] = useState("");
-    const [emptyFields, setEmptyFields] = useState("");
-    const [success, setSuccess] = useState("");
+    const [invalidCredentials, setInvalidCredentials] = useState(false);
+    const [emptyFields, setEmptyFields] = useState(false);
+    const [success, setSuccess] = useState(false);
     const logIn = () => {
         if (username == "" || password == "") {
             setEmptyFields(true)

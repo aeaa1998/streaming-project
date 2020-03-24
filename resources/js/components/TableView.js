@@ -15,6 +15,7 @@ import ArrowForward from '@material-ui/icons/ArrowForward';
 import AddIcon from '@material-ui/icons/Add';
 import Send from '@material-ui/icons/Send';
 import DeleteForeverSharp from '@material-ui/icons/DeleteForeverSharp';
+import Flag from '@material-ui/icons/Flag';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -112,7 +113,7 @@ const TableView = (props) => {
     const [alert, setAlert] = useState(false)
     const [alertSeverity, setAlertSeverity] = useState("success")
     const [alertMessage, setAlertMessage] = useState("")
-    const [itemsPerPage, watchItemsPerPage] = useState(10)
+    const [itemsPerPage, watchItemsPerPage] = useState(15)
     const [open, setOpen] = useState(false)
     const [editing, setEditing] = useState(false)
     const [isValidForm, setIsValidForm] = useState(false)
@@ -137,12 +138,13 @@ const TableView = (props) => {
         })
         setIsValidForm(false)
     }
+
     const handleOpenEditing = () => (setEditing(true))
-    const fetchById = (id, callback) => (
+    const fetchById = (id) => (
         fetch(`fetch/${props.byIdQuery}/${props.idColumn}/${id}`)
             .then(result => result.json())
             .then(data => {
-                callback(); setSelected({ ...data[0] })
+                handleOpenEditing(); setSelected({ ...data[0] })
             }).catch(error => (console.log(`fetch/${props.byIdQuery}/${props.idColumn}/${id}`)))
     )
     const deleteById = (id) => (
@@ -192,7 +194,7 @@ const TableView = (props) => {
     const iconMaker = (permissionId, model) => {
         if (permissionId == 1) return <RemoveRedEye key={permissionId} color="primary" className="ml-2 pointer" onClick={() => { handleOpen(); setSelected({ ...model }) }} />
         else if (permissionId == 2) return <Edit key={permissionId} color="action" className="ml-2 pointer" onClick={() => {
-            fetchById(model.id, handleOpenEditing)
+            fetchById(model.id)
         }} />
         else if (permissionId == 3) return <DeleteForeverSharp key={permissionId} color="error" className="ml-2 pointer" onClick={
             () => {
@@ -236,6 +238,7 @@ const TableView = (props) => {
                                     callback={(response) => { setIsFetching(false); watchPage(0); setRows(_.sortBy(response, ['id'])) }}
                                 />
                             </div>
+
                             {Object.entries(filterJson).map(([column, json]) =>
                                 <div className="pr-1 pl-1 col-6" key={column}>
                                     <TextField id={column} key={column} label={column} type="search" />
@@ -303,7 +306,7 @@ const TableView = (props) => {
                             <TableHead>
                                 <TableRow>
                                     {props.columns.map((value, index) => <TableCell key={index}>{value}</TableCell>)}
-                                    <TableCell style={{ minWidth: 155 }}>Acciones</TableCell>
+                                    <TableCell style={{ minWidth: 205 }}>Acciones</TableCell>
                                 </TableRow>
                             </TableHead>
 
