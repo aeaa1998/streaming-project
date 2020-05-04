@@ -394,7 +394,7 @@ const SongsTableView = (props) => {
                                                     ) : "")
                                                 }
                                                 {/* AddShoppingCart */}
-                                                {!permissions.includes(4) && !songsInCart.includes(row.id) ? <AddShoppingCart
+                                                {!permissions.includes(4) && row.isactive == 1 && !songsInCart.includes(row.id) ? <AddShoppingCart
                                                     className="ml-2 pointer"
                                                     onClick={() => {
                                                         fetch("add/track/cart", {
