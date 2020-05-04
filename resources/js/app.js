@@ -21,4 +21,6 @@ require('./components/Roles');
 require('./components/Navbar');
 require('./components/Register');
 require('./components/Users');
-require('./components/Reports')
+require('./components/Reports');
+require('./components/Audits');
+require('./components/Cart');

@@ -23,27 +23,51 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/auth/user/{username}/{password}', 'AuthController@login');
 });
 
-
+Route::get('deezer/{title}/{artist}', 'ViewsController@search');
 
 Route::group(['middleware' => ['authenticated']], function () {
     Route::post('/logout', 'AuthController@logout');
+
     Route::get('/reports', 'ViewsController@reports');
+    Route::get('/cart', 'ViewsController@cart');
+    Route::post('/cart/tracks/{id}', 'CartController@deleteTrack');
+    Route::post('/cart/tracks', 'CartController@changeQuantity');
+    Route::post('/cart/pay', 'CartController@payCart');
+    Route::post('/play/track', 'PlayTrackRecordController@registerPlayRecord');
+    Route::post('/cart/clean', 'CartController@cleanCart');
     Route::get('/genres', 'ViewsController@genres');
     Route::get('/albums', 'ViewsController@albums');
     Route::put('/deactivate/song/{id}', 'DatabaseController@deactivateSong');
     Route::put('/activate/song/{id}', 'DatabaseController@activateSong');
     Route::get('/songs', 'ViewsController@songs')->name('songs');
     Route::get('/reports', 'ViewsController@reports');
+
+
+    Route::put('update/by/id', 'DatabaseController@updateById');
+    Route::put('delete/id', 'DatabaseController@deleteById');
+    Route::post('create', 'DatabaseController@store');
+    Route::post('add/track/cart', 'CartController@addTrackToCart');
+    Route::post('admin/create', 'DatabaseController@store');
+    Route::put('admin/update/by/id', 'DatabaseController@updateById');
+    Route::put('admin/delete/id', 'DatabaseController@deleteById');
+
+
+
     Route::group(['middleware' => ['isAdmin']], function () {
         Route::get('/admin/users', 'AuthViewsController@adminUsers');
         Route::put('edit/role', 'RolesController@edit');
         Route::post('delete/role/{id}', 'RolesController@delete');
         Route::post('create/role', 'RolesController@create');
         Route::get('fetch/roles', 'RolesController@getRoles');
+        Route::get('fetch/audits', 'AuditsController@getAudits');
+        Route::get('fetch/audits/by/table', 'AuditsController@byTable');
+        Route::get('fetch/audits/by/type', 'AuditsController@byTypes');
+        Route::get('fetch/audits/by/both', 'AuditsController@byBoth');
         Route::get('fetch/roles/by/name', 'RolesController@getRolesByName');
         Route::get('fetch/roles/by/permission', 'RolesController@getRolesByPermission');
         Route::get('fetch/roles/by/both', 'RolesController@getRolesByBoth');
         Route::get('/admin/roles', 'RolesController@roles');
+        Route::get('/admin/audits', 'AuditsController@audits');
     });
 
     Route::get('/artists', 'ViewsController@artists');

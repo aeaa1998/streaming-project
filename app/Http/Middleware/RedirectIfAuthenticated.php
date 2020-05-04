@@ -17,6 +17,7 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        // $request->session()->forget('user_id');
         if ($request->session()->has('user_id')) {
             return redirect('/artists');
         }

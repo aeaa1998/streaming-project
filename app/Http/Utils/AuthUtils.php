@@ -20,4 +20,38 @@ class AuthUtils
             return $permission->id;
         })->toArray();
     }
+
+    public static function getOwnedSongs()
+    {
+        $id = session('user_id');
+        if (in_array(4, self::getPermissions())) {
+            $ownedSongs = collect(DB::select('select trackid as id from track'));
+            return $ownedSongs->map(function ($song) {
+                return $song->id;
+            })->toArray();
+        } else {
+            $ownedSongs = collect(DB::select("
+            select DISTINCT(InvoiceLine.TrackId) as id from InvoiceLine
+            inner join invoice on invoice.InvoiceId = InvoiceLine.InvoiceId 
+            inner join Customer on Customer.CustomerId = invoice.CustomerId
+            where customer.UserId = {$id}
+            "));
+            return $ownedSongs->map(function ($song) {
+                return $song->id;
+            })->toArray();
+        }
+    }
+
+    public static function getSongsInCart()
+    {
+        $id = session('user_id');
+        $cartSongs = collect(DB::select("
+        select DISTINCT(CartTracks.TrackId) as id from CartTracks
+        inner join Cart on Cart.id = CartTracks.cartid 
+        where Cart.UserId = {$id}
+        "));
+        return $cartSongs->map(function ($song) {
+            return $song->id;
+        })->toArray();
+    }
 }

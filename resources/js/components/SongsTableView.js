@@ -10,26 +10,39 @@ import ClearButton from './ClearButton'
 import FilterButton from './FilterButton'
 import Card from '@material-ui/core/Card';
 import Edit from '@material-ui/icons/Edit';
+import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 import RemoveRedEye from '@material-ui/icons/RemoveRedEye';
 import ArrowForward from '@material-ui/icons/ArrowForward';
-import AddIcon from '@material-ui/icons/Add';
 import Send from '@material-ui/icons/Send';
 import DeleteForeverSharp from '@material-ui/icons/DeleteForeverSharp';
 import Flag from '@material-ui/icons/Flag';
+import PlayArrow from '@material-ui/icons/PlayArrow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash'
-
+let userId = -1
 let permissions = []
+let ownedSongs = []
+let songsInCart = []
 let filterJson = [{}]
+if (document.getElementById("userId")) {
+    userId = document.getElementById("userId").value
+}
 if (document.getElementById('permissions')) {
     permissions = JSON.parse(document.getElementById('permissions').getAttribute('data'))
 }
 if (document.getElementById('filterJson')) {
     filterJson = JSON.parse(document.getElementById('filterJson').getAttribute('data'))
 }
+if (document.getElementById('ownedSongs')) {
+    ownedSongs = JSON.parse(document.getElementById('ownedSongs').getAttribute('data'))
 
+}
+
+if (document.getElementById('songsInCart')) {
+    songsInCart = JSON.parse(document.getElementById('songsInCart').getAttribute('data'))
+}
 
 
 const useStyles = makeStyles(theme => ({
@@ -158,10 +171,10 @@ const SongsTableView = (props) => {
             }).catch(error => (console.log(`fetch/${props.byIdQuery}/${props.idColumn}/${id}`)))
     )
     const deleteById = (id) => (
-        fetch('api/delete/id',
+        fetch('delete/id',
             {
                 method: 'PUT', // or 'PUT'
-                body: JSON.stringify({ query: props.url, "columnId": props.idColumn, "id": id, "table": props.table }), // data can be `string` or {object}!
+                body: JSON.stringify({ query: props.url, "columnId": props.idColumn, "id": id, "table": props.table, "userId": userId }), // data can be `string` or {object}!
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -177,9 +190,12 @@ const SongsTableView = (props) => {
     )
     const updateById = (id, column, value) => {
 
-        fetch("api/update/by/id", {
+        fetch("update/by/id", {
             method: 'PUT', // or 'PUT'
-            body: JSON.stringify({ query: props.byIdQuery, columnId: props.idColumn, id: id, column: column, value: value, table: props.table }), // data can be `string` or {object}!
+            body: JSON.stringify({
+                query: props.byIdQuery, columnId: props.idColumn, id: id, column: column, value: value, table: props.table
+                , "userId": userId
+            }), // data can be `string` or {object}!
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -360,7 +376,7 @@ const SongsTableView = (props) => {
                             <TableHead>
                                 <TableRow>
                                     {props.columns.map((value, index) => <TableCell key={index}>{value}</TableCell>)}
-                                    <TableCell style={{ minWidth: 205 }}>Acciones</TableCell>
+                                    <TableCell style={{ minWidth: 235 }}>Acciones</TableCell>
                                 </TableRow>
                             </TableHead>
 
@@ -371,11 +387,59 @@ const SongsTableView = (props) => {
                                             .filter(([rowKey, value]) => rowKey != "isactive")
                                             .map(([rowKey, value]) => <TableCell key={rowKey}>{value}</TableCell>)}
                                         <TableCell>
-                                            {
-                                                (permissions.length != 0 ? (
-                                                    permissions.map((value, index) => (iconMaker(value, row)))
-                                                ) : "Sin acciones")
-                                            }
+                                            <div>
+                                                {
+                                                    (permissions.length != 0 ? (
+                                                        permissions.map((value, index) => (iconMaker(value, row)))
+                                                    ) : "")
+                                                }
+                                                {/* AddShoppingCart */}
+                                                {!permissions.includes(4) && !songsInCart.includes(row.id) ? <AddShoppingCart
+                                                    className="ml-2 pointer"
+                                                    onClick={() => {
+                                                        fetch("add/track/cart", {
+                                                            method: 'POST',
+                                                            body: JSON.stringify({ trackid: row.id }),
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                            }
+                                                        }).then(res => res.json())
+                                                            .catch(error => showAlert("Error al ingresar tu cancion al carrito", "error"))
+                                                            .then(response => {
+                                                                songsInCart.push(row.id)
+                                                                showAlert("Se ha agregado con exito al carrito la canción", "success")
+                                                                setRows(_.sortBy(rows, ['id']))
+
+                                                            })
+                                                    }}
+                                                /> : ""}
+                                                {/** Add play button */}
+                                                {
+                                                    ownedSongs.includes(row.id) ?
+                                                        <PlayArrow onClick={
+                                                            () => {
+                                                                fetch("play/track", {
+                                                                    method: 'POST',
+                                                                    body: JSON.stringify({ trackid: row.id, artist: row["name_artist"], title: row["name"] }),
+                                                                    headers: {
+                                                                        'Content-Type': 'application/json',
+                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                    }
+                                                                }).then(res => res.json())
+                                                                    .catch(error =>
+                                                                        showAlert("No se encontro la cancion en deezer. Pero se guardo registro que se quiso dar play", "error")
+                                                                    )
+                                                                    .then(response => {
+                                                                        showAlert("Cancion reproduciendose", "success")
+                                                                        var win = window.open(response["link"], '_blank');
+                                                                        win.focus();
+                                                                    })
+                                                            }
+                                                        } /> : ""
+
+                                                }
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 )}
@@ -572,9 +636,12 @@ const SongsTableView = (props) => {
                                                     let values = createForm.reduce((acc, json) => acc + json.value + ", ", "")
                                                     values = values.substring(0, values.length - 2)
                                                     columns = columns.substring(0, columns.length - 2)
-                                                    let data = { query: props.url, table: props.table, "values": values, "columns": columns, "columnId": props.idColumn }
+                                                    let data = {
+                                                        query: props.url, table: props.table, "values": values, "columns": columns,
+                                                        "columnId": props.idColumn, userId: userId
+                                                    }
                                                     console.log(data)
-                                                    fetch("api/create", {
+                                                    fetch("create", {
                                                         method: 'POST',
                                                         body: JSON.stringify(data),
                                                         headers: {

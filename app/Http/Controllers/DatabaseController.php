@@ -37,6 +37,11 @@ class DatabaseController extends Controller
 		$columnId = $request["columnId"];
 		$id = $request["id"];
 		DB::statement("delete from {$table}  where {$columnId} = {$id}");
+		$userId = $request->session()->get('user_id');
+		$table = strtolower($table);
+
+		DB::statement("update audit set userid = {$userId} where auditabletype = '{$table}' and auditableid = {$id}");
+
 		return DB::select("{$query}");
 	}
 
@@ -54,6 +59,23 @@ class DatabaseController extends Controller
 
 		DB::statement("insert into {$table}  ({$columnId}, {$columns}) VALUES ({$newId}, {$values})");
 
+		$userId = $request->user_id;
+		$table = strtolower($table);
+		$userId = $request->session()->get('user_id');
+		DB::statement("update audit set userid = {$userId} where auditabletype = '{$table}' and auditableid = {$newId}");
+
+		if ($table == 'users') {
+			$last = DB::select("select customerid as id from customer order by customerid DESC")[0];
+			$lastUser = DB::select("select userid as id, name as name, email from users order by userid DESC")[0];
+			$newId = $last->id + 1;
+			DB::statement(
+				"insert into customer  (CustomerId, FirstName, LastName, Company, Address, City, State, Country, PostalCode, Phone, Fax, Email, UserId) 
+				VALUES
+				({$newId}, '{$lastUser->name}', ' ', 'UVG', 'Vista hermosa 3', 'Guatemala', 'Guatemala', 'Guatemala', '560001', '', '', 
+				'{$lastUser->email}', {$lastUser->id})
+				"
+			);
+		}
 		return DB::select("{$query}");
 	}
 
@@ -68,9 +90,10 @@ class DatabaseController extends Controller
 		$value = $request["value"];
 		$value = str_replace("-----", "/", $value);
 		$value = str_replace("+=+", "%", $value);
-
-
+		$userId = $request->session()->get('user_id');
 		DB::statement("update  {$table} set {$column} = {$value} where {$columnId} = {$id}");
+		$table = strtolower($table);
+		DB::statement("update audit set userid = {$userId} where auditabletype = '{$table}' and auditableid = {$id}");
 		return DB::select("{$query} where {$columnId} = {$id}");
 	}
 	public function filteredAll(Request $request, $query)

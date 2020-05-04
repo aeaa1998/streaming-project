@@ -18,6 +18,10 @@
         <div id="navbar"></div>
         <div id="permissions" data='{{ $permissions }}'></div>
         <div id="rows" data='{{ $rows }}'></div>
+        <input type="hidden" id="token_l" value="{{csrf_token()}}">
+        @isset($userId)
+        <input type="hidden" id="userId" value="{{$userId}}">
+        @endisset
         <div id="filterJson" data='{{ ($filteredJson ? json_encode($filteredJson) : json_encode([])) }}'></div>
         <div id="createForm" data='{{ ($createForm ? json_encode($createForm) : json_encode([])) }}'></div>
 

@@ -46,6 +46,9 @@ const Navbar = () => {
                         <a className="nav-link subtitle-2 white" href="/genres">Generos</a>
                     </li>
                     <li className="nav-item">
+                        <a className="nav-link subtitle-2 white" href="/cart">Carrito de compras</a>
+                    </li>
+                    <li className="nav-item">
                         <a className="nav-link subtitle-2 white" href="/reports">Reportería</a>
                     </li>
                     {
@@ -56,6 +59,7 @@ const Navbar = () => {
                             <div className={`dropdown-menu ${showing ? 'show' : ''}`} aria-labelledby="navbarDropdown">
                                 <a className={`dropdown-item subtitle-3 `} href="/admin/users">Usuarios</a>
                                 <a className={`dropdown-item subtitle-3 `} href="/admin/roles">Roles</a>
+                                <a className={`dropdown-item subtitle-3 `} href="/admin/audits">Bitácora</a>
                             </div>
                         </li> : ""
                     }

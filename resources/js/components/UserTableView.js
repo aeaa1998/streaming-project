@@ -144,7 +144,7 @@ const UserTableView = (props) => {
             }).catch(error => (console.log(`/fetch/${props.byIdQuery}/${props.idColumn}/${id}`)))
     )
     const deleteById = (id) => (
-        fetch('/api/delete/id',
+        fetch('/delete/id',
             {
                 method: 'PUT', // or 'PUT'
                 body: JSON.stringify({ query: props.url, "columnId": props.idColumn, "id": id, "table": props.table }), // data can be `string` or {object}!
@@ -163,7 +163,7 @@ const UserTableView = (props) => {
     )
     const updateById = (id, column, value) => {
 
-        fetch("/api/update/by/id", {
+        fetch("/update/by/id", {
             method: 'PUT', // or 'PUT'
             body: JSON.stringify({ query: props.byIdQuery, columnId: props.idColumn, id: id, column: column, value: value, table: props.table }), // data can be `string` or {object}!
             headers: {
@@ -509,7 +509,7 @@ const UserTableView = (props) => {
                                                     columns = columns.substring(0, columns.length - 2)
                                                     let data = { query: props.url, table: props.table, "values": values, "columns": columns, "columnId": props.idColumn }
                                                     console.log(data)
-                                                    fetch("/api/create", {
+                                                    fetch("/create", {
                                                         method: 'POST',
                                                         body: JSON.stringify(data),
                                                         headers: {

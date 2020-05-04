@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Utils\AuthUtils;
 use App\Http\Utils\QueryBuilder;
 use Illuminate\Http\Request;
-
+use Atomescrochus\Deezer\Deezer;
 use Illuminate\Support\Facades\DB;
 use  App\Http\Utils\Constants;
 
@@ -15,15 +15,31 @@ class ViewsController extends Controller
     {
 
 
-        return view('reports')->with('permissions',json_encode(AuthUtils::getPermissions())
-        )->with('albumsByArtist', json_encode(DB::select(Constants::ALBUMS_BY_ARTIST))
-        )->with('songsByGenre', json_encode(DB::select(Constants::SONGS_BY_GENRE))
-        )->with('durationByPlaylist', json_encode(DB::select(Constants::DURATION_BY_PLAYLIST))
-        )->with('durationBySong', json_encode(DB::select(Constants::DURATION_BY_SONG))
-        )->with('songsByArtist', json_encode(DB::select(Constants::SONGS_BY_ARTIST))
-        )->with('durationByGenre', json_encode(DB::select(Constants::DURATION_BY_GENRE))
-        )->with('artistByPlaylist', json_encode(DB::select(Constants::ARTIST_BY_PLAYLIST))
-        )->with('genresByArtist', json_encode(DB::select(Constants::GENRES_BY_ARTIST)) );
+        return view('reports')->with(
+            'permissions',
+            json_encode(AuthUtils::getPermissions())
+        )->with(
+            'albumsByArtist',
+            json_encode(DB::select(Constants::ALBUMS_BY_ARTIST))
+        )->with(
+            'songsByGenre',
+            json_encode(DB::select(Constants::SONGS_BY_GENRE))
+        )->with(
+            'durationByPlaylist',
+            json_encode(DB::select(Constants::DURATION_BY_PLAYLIST))
+        )->with(
+            'durationBySong',
+            json_encode(DB::select(Constants::DURATION_BY_SONG))
+        )->with(
+            'songsByArtist',
+            json_encode(DB::select(Constants::SONGS_BY_ARTIST))
+        )->with(
+            'durationByGenre',
+            json_encode(DB::select(Constants::DURATION_BY_GENRE))
+        )->with(
+            'artistByPlaylist',
+            json_encode(DB::select(Constants::ARTIST_BY_PLAYLIST))
+        )->with('genresByArtist', json_encode(DB::select(Constants::GENRES_BY_ARTIST)));
     }
 
     public function register()
@@ -37,7 +53,9 @@ class ViewsController extends Controller
     {
 
         return view('artists')->with('rows', json_encode(DB::select(Constants::ARTIST_URL)))
-            ->with('permissions', json_encode(AuthUtils::getPermissions()))->with(
+            ->with('permissions', json_encode(AuthUtils::getPermissions()))
+            ->with('userId', session('user_id'))
+            ->with(
                 'filteredJson',
                 Constants::ARTIST_FILTERS
             )->with('createForm', Constants::CREATE_ARTIST);
@@ -47,16 +65,34 @@ class ViewsController extends Controller
     public function genres()
     {
         return view('genres')->with('rows', json_encode(DB::select(Constants::GENRES_URL)))
-            ->with('permissions', json_encode(AuthUtils::getPermissions()))->with(
+            ->with('permissions', json_encode(AuthUtils::getPermissions()))
+            ->with('userId', session('user_id'))
+            ->with(
                 'filteredJson',
                 Constants::GENRE_FILTERS
             )->with('createForm', Constants::CREATE_GENRE);
     }
 
+    public function cart()
+    {
+        $userId = session('user_id');
+        $rows = "select CartTracks.id, CartTracks.quantity as quantity, Track.name as name, Track.unitprice as unitprice
+        from CartTracks 
+        inner join Cart on CartTracks.cartid = Cart.id
+        inner join Track on CartTracks.trackid = Track.trackid
+        where Cart.userid = {$userId}
+        order by id DESC
+        ";
+        return view('cart')->with('rows', json_encode(DB::select($rows)))
+            ->with('permissions', json_encode(AuthUtils::getPermissions()));
+    }
+
     public function albums()
     {
         return view('albums')->with('rows', json_encode(DB::select(Constants::ALBUM_URL)))
-            ->with('permissions', json_encode(AuthUtils::getPermissions()))->with(
+            ->with('permissions', json_encode(AuthUtils::getPermissions()))
+            ->with('userId', session('user_id'))
+            ->with(
                 'filteredJson',
                 array_merge(
                     [
@@ -92,7 +128,11 @@ class ViewsController extends Controller
     public function songs()
     {
         return view('songs')->with('rows', json_encode(DB::select(Constants::SONGS_URL)))
-            ->with('permissions', json_encode(AuthUtils::getPermissions()))->with(
+            ->with('ownedSongs', json_encode(AuthUtils::getOwnedSongs()))
+            ->with('songsInCart', json_encode(AuthUtils::getSongsInCart()))
+            ->with('permissions', json_encode(AuthUtils::getPermissions()))
+            ->with('userId', session('user_id'))
+            ->with(
                 'filteredJson',
                 array_merge([
                     "Album" => [
@@ -137,5 +177,17 @@ class ViewsController extends Controller
                     "value" => ""
                 ],
             ]));
+    }
+    public function search(Request $request, $title, $artist)
+    {
+        $title = str_replace("-----", "/", $title);
+        $artist = str_replace("-----", "/", $artist);
+        $deezer = new Deezer();
+        $results = $deezer->artist($artist) // string
+            ->track($title) // string
+            ->search();
+        $data = $results->raw->data;
+        // dd($results->raw->data[0]->preview);
+        return ["link" => $data[0]->preview];
     }
 }

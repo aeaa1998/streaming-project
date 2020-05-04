@@ -20,12 +20,39 @@ import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash'
+function getCookie(name) {
+    if (!document.cookie) {
+        return null;
+    }
+
+    const xsrfCookies = document.cookie.split(';')
+        .map(c => c.trim())
+        .filter(c => c.startsWith(name + '='));
+
+    if (xsrfCookies.length === 0) {
+        return null;
+    }
+    return decodeURIComponent(xsrfCookies[0].split('=')[1]);
+}
+
 
 let permissions = []
 let filterJson = [{}]
+let csfrToken = ""
+let userId = -1
 if (document.getElementById('permissions')) {
     permissions = JSON.parse(document.getElementById('permissions').getAttribute('data'))
 }
+if (document.getElementById("token_l")) {
+    csfrToken = document.getElementById("token_l").value
+}
+if (document.getElementById("userId")) {
+    userId = document.getElementById("userId").value
+}
+const headers = new Headers({
+    'Content-Type': 'application/json',
+    'X-CSRF-TOKEN': csfrToken,
+});
 if (document.getElementById('filterJson')) {
     filterJson = JSON.parse(document.getElementById('filterJson').getAttribute('data'))
 }
@@ -148,10 +175,10 @@ const TableView = (props) => {
             }).catch(error => (console.log(`fetch/${props.byIdQuery}/${props.idColumn}/${id}`)))
     )
     const deleteById = (id) => (
-        fetch('api/delete/id',
+        fetch('delete/id',
             {
                 method: 'PUT', // or 'PUT'
-                body: JSON.stringify({ query: props.url, "columnId": props.idColumn, "id": id, "table": props.table }), // data can be `string` or {object}!
+                body: JSON.stringify({ query: props.url, "columnId": props.idColumn, "id": id, "table": props.table, "userId": userId }), // data can be `string` or {object}!
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -167,9 +194,12 @@ const TableView = (props) => {
     )
     const updateById = (id, column, value) => {
 
-        fetch("api/update/by/id", {
+        fetch("update/by/id", {
             method: 'PUT', // or 'PUT'
-            body: JSON.stringify({ query: props.byIdQuery, columnId: props.idColumn, id: id, column: column, value: value, table: props.table }), // data can be `string` or {object}!
+            body: JSON.stringify({
+                query: props.byIdQuery, columnId: props.idColumn, id: id, column: column, value: value, table: props.table,
+                userId: userId
+            }),
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -512,9 +542,11 @@ const TableView = (props) => {
                                                     let values = createForm.reduce((acc, json) => acc + json.value + ", ", "")
                                                     values = values.substring(0, values.length - 2)
                                                     columns = columns.substring(0, columns.length - 2)
-                                                    let data = { query: props.url, table: props.table, "values": values, "columns": columns, "columnId": props.idColumn }
-                                                    console.log(data)
-                                                    fetch("api/create", {
+                                                    let data = {
+                                                        query: props.url, table: props.table, "values": values, "columns":
+                                                            columns, "columnId": props.idColumn, userId: userId
+                                                    }
+                                                    fetch("create", {
                                                         method: 'POST',
                                                         body: JSON.stringify(data),
                                                         headers: {
