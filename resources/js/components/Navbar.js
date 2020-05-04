@@ -45,9 +45,12 @@ const Navbar = () => {
                     <li className="nav-item">
                         <a className="nav-link subtitle-2 white" href="/genres">Generos</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link subtitle-2 white" href="/cart">Carrito de compras</a>
-                    </li>
+                    {
+                        !permissions.includes(4) ? <li className="nav-item">
+                            <a className="nav-link subtitle-2 white" href="/cart">Carrito de compras</a>
+                        </li> : ""
+                    }
+
                     <li className="nav-item">
                         <a className="nav-link subtitle-2 white" href="/reports">Reportería</a>
                     </li>
