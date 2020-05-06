@@ -27,8 +27,19 @@ Route::get('deezer/{title}/{artist}', 'ViewsController@search');
 
 Route::group(['middleware' => ['authenticated']], function () {
     Route::post('/logout', 'AuthController@logout');
-
+    Route::get('/tableu', 'ViewsController@tableu');
     Route::get('/reports', 'ViewsController@reports');
+    Route::get('/playlists', 'PlaylistController@view');
+    Route::get('/fetch/playlist', 'PlaylistController@getPlaylists');
+    Route::get('/fetch/playlists/by/name', 'PlaylistController@byName');
+    Route::get('/fetch/playlists/by/songs', 'PlaylistController@bySongs');
+    Route::get('/fetch/playlists/by/albums', 'PlaylistController@byAlbums');
+    Route::get('/fetch/playlists/by/artists', 'PlaylistController@byArtists');
+    Route::post('/delete/songs/playlist', 'PlaylistController@deleteSongsFromPlaylist');
+    Route::post('/create/playlist', 'PlaylistController@addPlaylist');
+    Route::post('/add/songs/playlist', 'PlaylistController@addSongstoPlaylist');
+    Route::post('/delete/playlist/{playlist_id}', 'PlaylistController@deletePlaylist');
+    Route::put('/edit/playlist', 'PlaylistController@editPlaylist');
     Route::get('/cart', 'ViewsController@cart');
     Route::post('/cart/tracks/{id}', 'CartController@deleteTrack');
     Route::post('/cart/tracks', 'CartController@changeQuantity');
@@ -68,6 +79,8 @@ Route::group(['middleware' => ['authenticated']], function () {
         Route::get('fetch/roles/by/both', 'RolesController@getRolesByBoth');
         Route::get('/admin/roles', 'RolesController@roles');
         Route::get('/admin/audits', 'AuditsController@audits');
+        Route::get('/admin/simulate', 'SimulationController@view');
+        Route::post('/admin/simulate/sales', 'SimulationController@simulate');
     });
 
     Route::get('/artists', 'ViewsController@artists');

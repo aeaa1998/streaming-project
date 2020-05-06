@@ -106,6 +106,7 @@ let tableSelect = [{}]
 let typeSelect = [{}]
 if (document.getElementById('rows')) {
     rowsFetched = JSON.parse(document.getElementById('rows').getAttribute('data'))
+    console.log(rowsFetched)
 }
 
 if (document.getElementById('tableSelect')) {
@@ -132,7 +133,7 @@ const Audits = (props) => {
     const [edit, setEdit] = useState(false)
     const [create, setCreate] = useState(false)
     const [rows, setRows] = useState(rowsFetched)
-    const [selectedAudit, setSelectedAudit] = useState({})
+    const [selectedAudit, setSelectedAudit] = useState({ event: "" })
     const [nameEdit, setNameEdit] = useState("")
     const [nameCreate, setNameCreate] = useState("")
     const [tablesFilter, setTablesFilter] = useState([])
@@ -325,9 +326,10 @@ const Audits = (props) => {
                                                 <TableCell>{row["user"]}</TableCell>
                                                 <TableCell>
                                                     {
-                                                        (permissions.length != 0 && row["event"].toLowerCase() == "update" ? (
-                                                            permissions.map((value, index) => (iconMaker(value, row)))
-                                                        ) : "Sin acciones")
+                                                        (permissions.length != 0 && (row["event"].toLowerCase() == "update" || row["event"].toLowerCase() == "remove_song"
+                                                            || row["event"].toLowerCase() == "new_song") ? (
+                                                                permissions.map((value, index) => (iconMaker(value, row)))
+                                                            ) : "Sin acciones")
                                                     }
                                                 </TableCell>
                                             </TableRow>
@@ -373,17 +375,29 @@ const Audits = (props) => {
                                             </div>
                                             <div className="col-6">
                                                 <div className="pl-4 pr-4 card-header subtitle-2">
-                                                    Valor antiguo
+                                                    {selectedAudit["event"].toLowerCase() != "remove_song" && selectedAudit["event"].toLowerCase() != "new_song"
+                                                        && "Valor antiguo"}
+                                                    {selectedAudit["event"].toLowerCase() == "remove_song" || selectedAudit["event"].toLowerCase() == "new_song"
+                                                        && "Playlist Id"}
                                                 </div>
-                                                <div className="mt-3 text-center subtitle-2">{selectedAudit["oldvalue"] ?? "No hubo cambio de valor"}</div>
+                                                {selectedAudit["event"].toLowerCase() != "remove_song" && selectedAudit["event"].toLowerCase() != "new_song"
+                                                    && <div className="mt-3 text-center subtitle-2">{selectedAudit["oldvalue"] ?? "No hubo cambio de valor"}</div>}
+                                                {selectedAudit["event"].toLowerCase() == "remove_song" || selectedAudit["event"].toLowerCase() == "new_song"
+                                                    && <div className="mt-3 text-center subtitle-2">{selectedAudit["idtable"] ?? "No hubo cambio de valor"}</div>}
+
                                             </div>
 
 
                                             <div className="col-6">
                                                 <div className="pl-4 pr-4 card-header subtitle-2">
-                                                    Valor nuevo
-
-                                                    <div className="mt-3 text-center subtitle-2">{selectedAudit["newvalue"] ?? "No hubo cambio de valor"}</div>
+                                                    {selectedAudit["event"].toLowerCase() != "remove_song" && selectedAudit["event"].toLowerCase() != "new_song"
+                                                        && "Valor nuevo"}
+                                                    {selectedAudit["event"].toLowerCase() == "new_song" && "Se ingreso nueva cancion"}
+                                                    {selectedAudit["event"].toLowerCase() == "remove_song" && "Se borro"}
+                                                    {selectedAudit["event"].toLowerCase() != "remove_song" && selectedAudit["event"].toLowerCase() != "new_song"
+                                                        && <div className="mt-3 text-center subtitle-2">{selectedAudit["newvalue"] ?? "No hubo cambio de valor"}</div>}
+                                                    {selectedAudit["event"].toLowerCase() == "new_song" && <div className="mt-3 text-center subtitle-2">{selectedAudit["newvalue"] ?? "No hubo cambio de valor"}</div>}
+                                                    {selectedAudit["event"].toLowerCase() == "remove_song" && <div className="mt-3 text-center subtitle-2">{selectedAudit["oldvalue"] ?? "No hubo cambio de valor"}</div>}
                                                 </div>
                                             </div>
                                         </div>

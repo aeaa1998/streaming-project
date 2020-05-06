@@ -31,6 +31,10 @@
         "chart.js": "^2.9.3",
         "moment": "^2.25.1",
         "react-chartjs-2": "^2.9.0",
+<<<<<<< HEAD
         "react-datepicker": "^2.14.1"
+=======
+        "uuid": "^8.0.0"
+>>>>>>> c9b877ccce3d63760d2a1860d31b58acad428e0a
     }
 }

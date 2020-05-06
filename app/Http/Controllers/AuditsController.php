@@ -11,7 +11,7 @@ class AuditsController extends Controller
     public function audits()
     {
         $tableSelect = ["artist" => 'Artista', 'track' => "Canciones", "playlist" => "Playlist", 'album' => "Album"];
-        $typeSelect = ["update" => 'Actualización', 'insert' => "Nuevo ingreso", "delete" => "Borrar"];
+        $typeSelect = ["update" => 'Actualización', 'insert' => "Nuevo ingreso", "delete" => "Borrar", "REMOVE_SONG" => "Borro cancion de playlist", "NEW_SONG" => "Agrego cancion a playlist"];
         $tableSelect = collect($tableSelect)->map(function ($item, $key) {
             return [
                 'id' => $key,

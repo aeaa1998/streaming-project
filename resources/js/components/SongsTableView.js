@@ -417,26 +417,28 @@ const SongsTableView = (props) => {
                                                 {/** Add play button */}
                                                 {
                                                     ownedSongs.includes(row.id) ?
-                                                        <PlayArrow onClick={
-                                                            () => {
-                                                                fetch("play/track", {
-                                                                    method: 'POST',
-                                                                    body: JSON.stringify({ trackid: row.id, artist: row["name_artist"], title: row["name"] }),
-                                                                    headers: {
-                                                                        'Content-Type': 'application/json',
-                                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                                    }
-                                                                }).then(res => res.json())
-                                                                    .catch(error =>
-                                                                        showAlert("No se encontro la cancion en deezer. Pero se guardo registro que se quiso dar play", "error")
-                                                                    )
-                                                                    .then(response => {
-                                                                        showAlert("Cancion reproduciendose", "success")
-                                                                        var win = window.open(response["link"], '_blank');
-                                                                        win.focus();
-                                                                    })
-                                                            }
-                                                        } /> : ""
+                                                        <PlayArrow
+                                                            className="ml-2 pointer"
+                                                            onClick={
+                                                                () => {
+                                                                    fetch("play/track", {
+                                                                        method: 'POST',
+                                                                        body: JSON.stringify({ trackid: row.id, artist: row["name_artist"], title: row["name"] }),
+                                                                        headers: {
+                                                                            'Content-Type': 'application/json',
+                                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                                        }
+                                                                    }).then(res => res.json())
+                                                                        .catch(error =>
+                                                                            showAlert("No se encontro la cancion en deezer. Pero se guardo registro que se quiso dar play", "error")
+                                                                        )
+                                                                        .then(response => {
+                                                                            showAlert("Cancion reproduciendose", "success")
+                                                                            var win = window.open(response["link"], '_blank');
+                                                                            win.focus();
+                                                                        })
+                                                                }
+                                                            } /> : ""
 
                                                 }
                                             </div>

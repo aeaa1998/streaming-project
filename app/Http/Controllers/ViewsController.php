@@ -176,6 +176,21 @@ class ViewsController extends Controller
                 ],
             ]));
     }
+
+
+    public function tableu()
+    {
+        return view('tableu')->with('permissions', json_encode(AuthUtils::getPermissions()))
+            ->with('rows', json_encode(DB::select(Constants::PLAYLIST_URL)))
+            ->with('userId', session('user_id'))
+            ->with('filterJson', Constants::PLAYLIST_FILTERS);
+    }
+
+    public function playList()
+    {
+        return view('playlist')->with('permissions', json_encode(AuthUtils::getPermissions()));
+    }
+
     public function search(Request $request, $title, $artist)
     {
         $title = str_replace("-----", "/", $title);
