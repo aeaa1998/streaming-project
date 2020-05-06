@@ -105,6 +105,8 @@ class Constants
      from CartTracks 
      inner join 
      ";
+
+    const PLAYLIST_URL = "select Playlist.playlistid as id, Playlist.name as name";
     const SONGS_URL = "select Track.TrackId as id, Track.name as name, Track.Composer as composer, Track.milliseconds as miliseconds, Artist.name as Name_Artist, Album.title as album, Genre.name as genero, Track.isActive as isActive from Track inner join Genre on Genre.GenreId = Track.GenreId inner join Album on Album.AlbumId = Track.AlbumId inner join Artist on Artist.artistid = Album.artistid";
     const ARTIST_FILTERS = [
         "Id" => [
@@ -177,7 +179,21 @@ class Constants
             "tableName" => "name"
         ],
     ];
-
+    const PLAYLIST_FILTERS = [
+        "Id" => [
+            "operator" => "=",
+            "column" => "Playlist.Playlistid",
+            "type" => "number",
+            "tableName" => "id"
+        ],
+        "Nombre" => [
+            "operator" => "LIKE",
+            "column" => "Playlist.name",
+            "columnEdit" => "name",
+            "type" => "text",
+            "tableName" => "name"
+        ],
+    ];
     const SONG_FILTERS = [
         "Id" => [
             "operator" => "=",
@@ -213,7 +229,7 @@ class Constants
             "tableName" => "miliseconds"
         ],
     ];
-
+    const CREATE_PLAYLIST = [];
     const CREATE_SONGS =        [
         [
             "column" => "name",

@@ -12,7 +12,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-
+.v-none {
+	visibility: hidden;
+}
 .pointer {
 	cursor: pointer;
 }

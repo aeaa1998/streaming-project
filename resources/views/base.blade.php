@@ -22,9 +22,12 @@
         @isset($userId)
         <input type="hidden" id="userId" value="{{$userId}}">
         @endisset
+        @isset($filteredJson)
         <div id="filterJson" data='{{ ($filteredJson ? json_encode($filteredJson) : json_encode([])) }}'></div>
+        @endisset
+        @isset($createForm)
         <div id="createForm" data='{{ ($createForm ? json_encode($createForm) : json_encode([])) }}'></div>
-
+        @endisset
         @yield('content')
 
     </div>

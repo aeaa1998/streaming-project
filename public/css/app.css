@@ -10983,6 +10983,10 @@ a.text-dark:focus {
   }
 }
 
+.v-none {
+  visibility: hidden;
+}
+
 .pointer {
   cursor: pointer;
 }

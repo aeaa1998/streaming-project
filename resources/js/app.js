@@ -24,3 +24,6 @@ require('./components/Users');
 require('./components/Reports');
 require('./components/Audits');
 require('./components/Cart');
+require('./components/TableuReports');
+require('./components/Playlist');
+require('./components/Simulation');

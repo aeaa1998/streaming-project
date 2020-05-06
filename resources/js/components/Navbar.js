@@ -54,6 +54,13 @@ const Navbar = () => {
                     <li className="nav-item">
                         <a className="nav-link subtitle-2 white" href="/reports">Reportería</a>
                     </li>
+
+                    {/* <li className="nav-item">
+                        <a className="nav-link subtitle-2 white" href="/tableu">Tableu</a>
+                    </li> */}
+                    <li className="nav-item">
+                        <a className="nav-link subtitle-2 white" href="/playlists">Playlists</a>
+                    </li>
                     {
                         permissions.includes(4) ? <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle white subtitle-2" href="#" id="navbarDropdown" role="button" onClick={() => { console.log('here'); setShow(!showing) }}>
@@ -63,6 +70,7 @@ const Navbar = () => {
                                 <a className={`dropdown-item subtitle-3 `} href="/admin/users">Usuarios</a>
                                 <a className={`dropdown-item subtitle-3 `} href="/admin/roles">Roles</a>
                                 <a className={`dropdown-item subtitle-3 `} href="/admin/audits">Bitácora</a>
+                                <a className={`dropdown-item subtitle-3 `} href="/admin/simulate">Simulación de ventas</a>
                             </div>
                         </li> : ""
                     }
