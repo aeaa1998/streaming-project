@@ -13,8 +13,6 @@ class ViewsController extends Controller
 {
     public function reports()
     {
-
-
         return view('reports')->with(
             'permissions',
             json_encode(AuthUtils::getPermissions())

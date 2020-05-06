@@ -30,6 +30,7 @@
         "@material-ui/lab": "^4.0.0-alpha.46",
         "chart.js": "^2.9.3",
         "moment": "^2.25.1",
-        "react-chartjs-2": "^2.9.0"
+        "react-chartjs-2": "^2.9.0",
+        "react-datepicker": "^2.14.1"
     }
 }

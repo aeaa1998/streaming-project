@@ -104,7 +104,7 @@ const Register = () => {
                             <div className="offset-3 col-6">
                                 <button type="button"
                                     className={`btn btn-${(![name, username, password, passwordConfirm, subscription].every(val => val != "")) ? 'dark' : 'success'} w-100`}
-                                    onClick={registerUser}>Regustrarse</button>
+                                    onClick={registerUser}>Registrarse</button>
                             </div>
                         </div>
                         {/* <div className="w-100 text-center pointer inline-block">Recuperar contraseña</div> */}
