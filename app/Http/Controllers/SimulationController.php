@@ -24,9 +24,7 @@ class SimulationController extends Controller
             $cusotmer = DB::select("select customerid as id, userid from customer OFFSET floor(random()*{$numberOfCustomers}) LIMIT 1")[0];
             $customers->push($cusotmer);
         }
-
         $customers->map(function ($customer) use ($numberOfTracks, $countTracksDB, $selectedDate) {
-
             $tracks = collect([]);
             $total = 0;
             for ($i = 0; $i < $numberOfTracks; $i++) {
