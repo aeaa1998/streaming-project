@@ -26,12 +26,16 @@ Route::group(['middleware' => ['guest']], function () {
 Route::get('deezer/{title}/{artist}', 'ViewsController@search');
 
 Route::group(['middleware' => ['authenticated']], function () {
+    Route::get('/fetch/sales/by/weeks', 'ReportsController@weekSalesInDates');
+    Route::get('/fetch/artists/by/dates', 'ReportsController@artistBySalesInDates');
+    Route::get('/fetch/genres/by/dates', 'ReportsController@genreSalesInDates');
+    Route::get('/fetch/artist/by/plays', 'ReportsController@artistSongsByPlays');
+
     Route::post('/logout', 'AuthController@logout');
     Route::get('/tableu', 'ViewsController@tableu');
-    Route::get('/reports', 'ViewsController@reports');
-    Route::get('/playlists', 'PlaylistController@view');
     Route::get('/fetch/playlist', 'PlaylistController@getPlaylists');
     Route::get('/fetch/playlists/by/name', 'PlaylistController@byName');
+    Route::get('/playlists', 'PlaylistController@view');
     Route::get('/fetch/playlists/by/songs', 'PlaylistController@bySongs');
     Route::get('/fetch/playlists/by/albums', 'PlaylistController@byAlbums');
     Route::get('/fetch/playlists/by/artists', 'PlaylistController@byArtists');
@@ -51,7 +55,7 @@ Route::group(['middleware' => ['authenticated']], function () {
     Route::put('/deactivate/song/{id}', 'DatabaseController@deactivateSong');
     Route::put('/activate/song/{id}', 'DatabaseController@activateSong');
     Route::get('/songs', 'ViewsController@songs')->name('songs');
-    Route::get('/reports', 'ViewsController@reports');
+    Route::get('/reports', 'ReportsController@reports');
 
 
     Route::put('update/by/id', 'DatabaseController@updateById');

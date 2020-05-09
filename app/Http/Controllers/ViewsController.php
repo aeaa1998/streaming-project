@@ -11,35 +11,6 @@ use  App\Http\Utils\Constants;
 
 class ViewsController extends Controller
 {
-    public function reports()
-    {
-        return view('reports')->with(
-            'permissions',
-            json_encode(AuthUtils::getPermissions())
-        )->with(
-            'albumsByArtist',
-            json_encode(DB::select(Constants::ALBUMS_BY_ARTIST))
-        )->with(
-            'songsByGenre',
-            json_encode(DB::select(Constants::SONGS_BY_GENRE))
-        )->with(
-            'durationByPlaylist',
-            json_encode(DB::select(Constants::DURATION_BY_PLAYLIST))
-        )->with(
-            'durationBySong',
-            json_encode(DB::select(Constants::DURATION_BY_SONG))
-        )->with(
-            'songsByArtist',
-            json_encode(DB::select(Constants::SONGS_BY_ARTIST))
-        )->with(
-            'durationByGenre',
-            json_encode(DB::select(Constants::DURATION_BY_GENRE))
-        )->with(
-            'artistByPlaylist',
-            json_encode(DB::select(Constants::ARTIST_BY_PLAYLIST))
-        )->with('genresByArtist', json_encode(DB::select(Constants::GENRES_BY_ARTIST)));
-    }
-
     public function register()
     {
 
