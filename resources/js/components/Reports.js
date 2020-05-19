@@ -2,8 +2,10 @@ import React, { Component, useState } from 'react';
 import $ from 'jquery';
 import Popper from 'popper.js';
 import ReactDOM from 'react-dom';
-import { Bar } from 'react-chartjs-2';
+import XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
+import { Bar } from 'react-chartjs-2';
 import 'date-fns';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -28,7 +30,7 @@ const Reports = ({
     const [endDate, setEndDate] = useState(new Date('2009-04-30'));
     const [quantity, setQuantity] = useState(3);
     const [input, setInput] = useState('');
-     
+
     const [report, setReport] = useState('songsByArtist');
     const [data, setData] = useState(JSON.parse(songsByArtist));
 
@@ -92,9 +94,9 @@ const Reports = ({
     }
 
     const filterFetch = (endpoint, json) => {
-        console.log("report", report);
-        console.log("endpoint", endpoint);
-        console.log("json", json);
+        // console.log("report", report);
+        // console.log("endpoint", endpoint);
+        // console.log("json", json);
         axios.get(endpoint, {
             params: {
                 parameters: json
@@ -105,6 +107,15 @@ const Reports = ({
                 console.log("RESPONSE:", response);
                 setData(response.data);
             })
+    }
+
+    const generate_csv = data => {
+        console.log(data);
+        const ws = XLSX.utils.json_to_sheet(data);
+        const csv = XLSX.utils.sheet_to_csv(ws);
+
+        const blob = new Blob([csv], {type: 'text/plain;charset=UTF-8'});
+        saveAs(blob, `${report}.csv`);
     }
 
 
@@ -239,6 +250,11 @@ const Reports = ({
                         <div></div>
                     )
                 }
+
+                <Button variant="outlined" style={{margin:'10px'}} onClick={() => {generate_csv(data)}}>
+                    Exportar a CSV
+                </Button>
+
             </div>
         </div>
     )
