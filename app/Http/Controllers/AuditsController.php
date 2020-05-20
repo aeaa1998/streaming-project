@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Utils\AuthUtils;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AuditsController extends Controller
 {
@@ -81,7 +82,13 @@ class AuditsController extends Controller
         });
         return $audits;
     }
-
+    // ''
+    public function getTracksBydate(Request $request)
+    {
+        $parameters = json_decode($request->parameters);
+        $startDate = Carbon::parse($parameters->startDate)->toDateTimeString();
+        $endDate = Carbon::parse($parameters->endDate)->toDateTimeString();
+    }
     public function byTable(Request $request)
     {
 

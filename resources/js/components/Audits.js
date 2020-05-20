@@ -162,6 +162,7 @@ const Audits = (props) => {
     }
     const filterFetch = (url, json) => {
         setIsFetching(true)
+
         axios.get(url, {
             params: {
                 parameters: json
@@ -169,7 +170,6 @@ const Audits = (props) => {
         })
             .catch(error => console.error('Error:', error))
             .then(response => {
-                console.log(response)
                 setIsFetching(false);
                 watchPage(0); setRows(response.data);
             })

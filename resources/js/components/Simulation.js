@@ -87,7 +87,10 @@ const Simulation = (props) => {
                                     label="Fecha en que se desea simular las ventas"
                                     type="date"
                                     value={selectedDate}
-                                    onChange={(e) => setSelectedDate(e.target.value)}
+                                    onChange={(e) => {
+                                        console.log(e.target.value)
+                                        setSelectedDate(e.target.value)
+                                    }}
                                     className="w-100"
                                     variant="filled"
                                     InputLabelProps={{
