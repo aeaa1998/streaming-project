@@ -15,8 +15,9 @@
 
 <body>
     <div class="container-fluid min-vh-100" style="padding: 0px">
+    
         <div id="navbar"></div>
-
+        <div id="permissions" data='{{ $permissions }}'></div>
         <input type="hidden" id="token_l" value="{{csrf_token()}}">
 
         <div id="simulations"></div>

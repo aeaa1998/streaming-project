@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Utils\AuthUtils;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -10,7 +11,8 @@ class SimulationController extends Controller
 {
     public function view(Request $request)
     {
-        return view('simulations');
+        return view('simulations')
+            ->with('permissions', json_encode(AuthUtils::getPermissions()));
     }
 
     public function simulate(Request $request)

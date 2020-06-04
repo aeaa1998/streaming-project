@@ -13,6 +13,8 @@ import AddCircleOutLine from '@material-ui/icons/AddCircleOutLine';
 import AddIcon from '@material-ui/icons/Add';
 import Remove from '@material-ui/icons/Remove';
 import Axios from 'axios';
+import moment from 'moment'
+import jsPDF from 'jspdf'
 const useStyles = makeStyles(theme => ({
     table: {
         minWidth: 650,
@@ -94,7 +96,49 @@ const Cart = (props) => {
                 setIsFetching(false); watchPage(0); setRows(_.sortBy(response.data, ['id']));
             })
     }
+
+    const generateDataTable = () => {
+
+        return rows.map(data => ({
+            name: data.name,
+            unitprice: `${data.unitprice}`,
+            quantity: `${data.quantity}`,
+            subtotal: `${(data.unitprice * data.quantity).toFixed(2)}`,
+        }))
+    }
+    function createHeaders(keys) {
+        var result = [];
+        const labels = {
+            name: "Nombre de la cancion",
+            unitprice: "Precio unitario",
+            quantity: "Cantidad",
+            subtotal: "Subtotal",
+        }
+        for (var i = 0; i < keys.length; i += 1) {
+            result.push({
+                id: keys[i],
+                name: keys[i],
+                prompt: labels[keys[i]],
+                width: 65,
+                align: "center",
+                padding: 0
+            });
+        }
+        return result;
+    }
+
     const payCart = () => {
+
+        const doc = new jsPDF();
+        doc.setFontSize(20);
+        doc.setFont("times");
+        doc.setFontStyle("normal");
+        const total = rowsFetched.reduce((carry, data) => carry += data.unitprice * data.quantity, 0)
+        doc.text(`Factura  fecha ${moment().locale('es').format('llll')}, Total: ${total.toFixed(2)}`, 80, 10, null, null, "center");
+        const headers = createHeaders(["name", "unitprice", "quantity", "subtotal"])
+        doc.table(1, 20, generateDataTable(), headers, { fontSize: 10 });
+        doc.setFontSize(16);
+        doc.save(`Factura  fecha ${moment().locale('es').format('llll')}`);
         setIsFetching(true)
         axios.post("cart/pay", {
             headers: {
