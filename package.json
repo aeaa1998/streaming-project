@@ -38,6 +38,6 @@
         "react-chartjs-2": "^2.9.0",
         "react-datepicker": "^2.14.1",
         "uuid": "^8.0.0",
-        "xlsx": "^0.16.1"
+        "xlsx": "^0.17.0"
     }
 }
